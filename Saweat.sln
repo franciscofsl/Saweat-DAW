@@ -29,6 +29,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Saweat.Application.Test", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Saweat.Persistence.Test", "test\Saweat.Persistence.Test\Saweat.Persistence.Test.csproj", "{FFC3088A-1EA4-4FA0-8161-E0015DCA1CC9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Saweat.Web.Admin", "src\Saweat.Web.Admin\Saweat.Web.Admin.csproj", "{FC348EB9-4BFB-4F9A-B42D-150697247645}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Saweat.Web.Public", "src\Saweat.Web.Public\Saweat.Web.Public.csproj", "{84B53A4C-4E54-44EB-BA73-799309CFCD25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,14 @@ Global
 		{FFC3088A-1EA4-4FA0-8161-E0015DCA1CC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFC3088A-1EA4-4FA0-8161-E0015DCA1CC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFC3088A-1EA4-4FA0-8161-E0015DCA1CC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC348EB9-4BFB-4F9A-B42D-150697247645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC348EB9-4BFB-4F9A-B42D-150697247645}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC348EB9-4BFB-4F9A-B42D-150697247645}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC348EB9-4BFB-4F9A-B42D-150697247645}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84B53A4C-4E54-44EB-BA73-799309CFCD25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84B53A4C-4E54-44EB-BA73-799309CFCD25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84B53A4C-4E54-44EB-BA73-799309CFCD25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84B53A4C-4E54-44EB-BA73-799309CFCD25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +86,8 @@ Global
 		{681ECEE0-A53F-4BD4-81D5-1F996711501B} = {02D7FF62-F026-4F7F-8EF2-FBB0ACC749F9}
 		{51EBF77A-0E07-4F98-B70D-5A40F3E948E5} = {DA3C81FB-282C-41DD-929F-D885D7ED9391}
 		{FFC3088A-1EA4-4FA0-8161-E0015DCA1CC9} = {DA3C81FB-282C-41DD-929F-D885D7ED9391}
+		{FC348EB9-4BFB-4F9A-B42D-150697247645} = {7FBBC21B-85B0-42B9-825D-2C308AAC472B}
+		{84B53A4C-4E54-44EB-BA73-799309CFCD25} = {7FBBC21B-85B0-42B9-825D-2C308AAC472B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A4BFF2F-F92D-4D10-83E6-7D8B747C0D32}
