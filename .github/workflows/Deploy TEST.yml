@@ -1,0 +1,62 @@
+name: Deploy TEST
+on:
+  push:
+    branches:
+    - main
+env:
+  SAWEAT_PUBLIC_NAME: saweat
+  SAWEAT_ADMIN_NAME: admin-saweat
+  SAWEAT_PUBLIC_SRC: src\Saweat.Web.Public\published
+  SAWEAT_ADMIN_SRC: src\Saweat.Web.Admin\published
+  PUBLIC_WORKING_DIRECTORY: src\Saweat.Web.Public
+  ADMIN_WORKING_DIRECTORY: src\Saweat.Web.Admin
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 6.0.x
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Restore Saweat Public
+      run: dotnet restore "${{ env.PUBLIC_WORKING_DIRECTORY }}"
+    - name: Build Saweat Public
+      run: dotnet build "${{ env.PUBLIC_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore    
+    - name: Test Saweat Public
+      run: dotnet test "${{ env.PUBLIC_WORKING_DIRECTORY }}" --no-build
+    - name: Publish Saweat Public
+      run: dotnet publish "${{ env.PUBLIC_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.SAWEAT_PUBLIC_SRC }}"   
+    - name: Deploy Saweat Public
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.SAWEAT_PUBLIC_NAME }}
+        publish-profile: ${{ secrets.saweat_FFFF }}
+        package: ${{ env.SAWEAT_PUBLIC_SRC }}
+    - name: Publish Saweat Public Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: webapp
+        path: ${{ env.SAWEAT_PUBLIC_SRC }}
+   
+    - name: Restore Saweat Admin
+      run: dotnet restore "${{ env.ADMIN_WORKING_DIRECTORY }}"
+    - name: Build Saweat Admin
+      run: dotnet build "${{ env.ADMIN_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+    - name: Test Saweat Admin
+      run: dotnet test "${{ env.ADMIN_WORKING_DIRECTORY }}" --no-build
+    - name: Publish Saweat Admin
+      run: dotnet publish "${{ env.ADMIN_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.SAWEAT_ADMIN_SRC }}"
+    - name: Deploy  Saweat Admin
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.SAWEAT_ADMIN_NAME }}
+        publish-profile: ${{ secrets.admin_saweat_FFFF }}
+        package: ${{ env.SAWEAT_ADMIN_SRC }}
+    - name: Publish Saweat Admin Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: webapp
+        path: ${{ env.SAWEAT_ADMIN_SRC }}
