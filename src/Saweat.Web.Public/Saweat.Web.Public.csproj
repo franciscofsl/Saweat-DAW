@@ -16,7 +16,13 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="6.0.0-preview.4.21253.7" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
     <PackageReference Include="Radzen.Blazor" Version="3.18.8" />
-    <PackageReference Include="DocumentFormat.OpenXml" Version="2.16.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Saweat.Application\Saweat.Application.csproj" />
+    <ProjectReference Include="..\Saweat.Domain\Saweat.Domain.csproj" />
+    <ProjectReference Include="..\Saweat.Infrastructure\Saweat.Infrastructure.csproj" />
+    <ProjectReference Include="..\Saweat.Persistence\Saweat.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

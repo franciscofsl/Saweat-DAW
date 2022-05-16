@@ -1,11 +1,10 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Radzen;
 
-namespace Saweat.Web.Public
+namespace Saweat.Web.Public.Services
 {
     public partial class GlobalsService
     {

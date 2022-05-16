@@ -1,31 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
-
 using Radzen;
+using Saweat.Application;
+using Saweat.Infrastructure;
+using Saweat.Persistence;
+using System;
+using System.Net.Http;
+
 namespace Saweat.Web.Admin
 {
     public partial class Startup
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -36,18 +28,18 @@ namespace Saweat.Web.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
-            OnConfiguringServices(services);
+            this.OnConfiguringServices(services);
 
             services.AddHttpContextAccessor();
             services.AddScoped<HttpClient>(serviceProvider =>
             {
 
-              var uriHelper = serviceProvider.GetRequiredService<NavigationManager>();
+                var uriHelper = serviceProvider.GetRequiredService<NavigationManager>();
 
-              return new HttpClient
-              {
-                BaseAddress = new Uri(uriHelper.BaseUri)
-              };
+                return new HttpClient
+                {
+                    BaseAddress = new Uri(uriHelper.BaseUri)
+                };
             });
 
             services.AddHttpClient();
@@ -63,7 +55,19 @@ namespace Saweat.Web.Admin
             services.AddScoped<TooltipService>();
             services.AddScoped<ContextMenuService>();
 
-            OnConfigureServices(services);
+            services.AddInfrastructureServices();
+
+            services.AddPersistenceServices(serviceProvider =>
+            {
+#if DEBUG
+                return this.Configuration.GetConnectionString("DebugConnectionString");
+#endif 
+                return this.Configuration.GetConnectionString("SaweatDBConnectionString");
+            });
+
+            services.AddApplicationServices();
+
+            this.OnConfigureServices(services);
         }
 
         partial void OnConfigure(IApplicationBuilder app, IWebHostEnvironment env);
@@ -71,7 +75,7 @@ namespace Saweat.Web.Admin
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            OnConfiguring(app, env);
+            this.OnConfiguring(app, env);
             if (env.IsDevelopment())
             {
                 Microsoft.IdentityModel.Logging.IdentityModelEventSource.ShowPII = true;
@@ -95,7 +99,7 @@ namespace Saweat.Web.Admin
                 endpoints.MapFallbackToPage("/_Host");
             });
 
-            OnConfigure(app, env);
+            this.OnConfigure(app, env);
         }
     }
 
