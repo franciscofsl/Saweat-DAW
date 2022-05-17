@@ -17,13 +17,21 @@ public class TestServices
         IServiceCollection collection = new ServiceCollection();
         collection.AddApplicationServices();
         collection.AddInfrastructureServices();
-        collection.AddPersistenceServices(_ => string.Empty, true);
+        collection.AddPersistenceServices(() => string.Empty, true);
         this._serviceProvider = collection.BuildServiceProvider();
-    }
+    } 
 
     public T GetService<T>() where T : class
     {
         return this._serviceProvider.GetService<T>();
     }
+
+    public T GetServiceAsScope<T>() where T : class, IDisposable
+    {
+        var scope = this._serviceProvider.CreateScope();
+        return scope.ServiceProvider.GetRequiredService<T>();
+    }
+
+
 }
  

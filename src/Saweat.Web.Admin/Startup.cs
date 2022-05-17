@@ -57,7 +57,7 @@ namespace Saweat.Web.Admin
 
             services.AddInfrastructureServices();
 
-            services.AddPersistenceServices(serviceProvider =>
+            services.AddPersistenceServices(() =>
             {
 #if DEBUG
                 return this.Configuration.GetConnectionString("DebugConnectionString");

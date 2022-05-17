@@ -390,3 +390,4 @@ FodyWeavers.xsd
 /docs
 /src/Presentation/Web
 /Saweat.Web.Utils
+/.editorconfig

@@ -33,7 +33,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Saweat.Web.Admin", "src\Saw
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Saweat.Web.Public", "src\Saweat.Web.Public\Saweat.Web.Public.csproj", "{84B53A4C-4E54-44EB-BA73-799309CFCD25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Saweat.Test.Common", "test\Saweat.Test.Common\Saweat.Test.Common.csproj", "{3B284211-863C-4796-8490-C7E96E08DFCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Saweat.Test.Common", "test\Saweat.Test.Common\Saweat.Test.Common.csproj", "{3B284211-863C-4796-8490-C7E96E08DFCC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CA699BDF-FC06-4E94-BDE7-E4A7E56DC136}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
