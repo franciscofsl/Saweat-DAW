@@ -1,5 +1,6 @@
 ﻿@inherits Saweat.Web.Admin.Layouts.MainLayoutComponent
 
+@using Microsoft.AspNetCore.Components.Authorization
 @using Radzen
 @using Radzen.Blazor
 @using Saweat.Web.Admin.Pages
@@ -9,39 +10,57 @@
 <RadzenContextMenu />
 
 <RadzenLayout>
-  <ChildContent>
-    <RadzenHeader>
-      <ChildContent>
-        <div class="row justify-content-start align-items-center">
-          <div class="col-6 d-flex align-items-center">
-            <RadzenSidebarToggle Click="@SidebarToggle0Click">
-            </RadzenSidebarToggle>
-            <RadzenLabel Text="Saweat.Web.Admin">
-            </RadzenLabel>
-          </div>
-          <div class="col-6 text-right">
-          </div>
-        </div>
-      </ChildContent>
-    </RadzenHeader>
-    <RadzenBody @ref="body0">
-      <ChildContent>
-        <RadzenContentContainer Name="main">
-        @Body
-        </RadzenContentContainer>
-      </ChildContent>
-    </RadzenBody>
-    <RadzenSidebar @ref="sidebar0">
-      <ChildContent>
-        <RadzenPanelMenu style="height: 100%">
-        </RadzenPanelMenu>
-      </ChildContent>
-    </RadzenSidebar>
-    <RadzenFooter>
-      <ChildContent>
-        <RadzenLabel Text="Saweat.Web.Admin, Copyright Ⓒ 2022">
-        </RadzenLabel>
-      </ChildContent>
-    </RadzenFooter>
-  </ChildContent>
+    <ChildContent>
+
+        <AuthorizeView>
+            <Authorized>
+                <RadzenHeader>
+                    <ChildContent>
+                        <div class="row justify-content-start align-items-center">
+                            <div class="col-6 d-flex align-items-center">
+                                <RadzenSidebarToggle Click="@SidebarToggle0Click"></RadzenSidebarToggle>
+                                <RadzenLabel Text="Saweat.Web.Admin"></RadzenLabel>
+                            </div>
+                            <div class="col-6 text-right">
+                                <AccessControl />
+                            </div>
+                        </div>
+                    </ChildContent>
+                </RadzenHeader>
+            </Authorized>
+        </AuthorizeView>
+        <RadzenBody @ref="body0">
+            <ChildContent>
+                <RadzenContentContainer Name="main">
+                    @Body
+                </RadzenContentContainer>
+            </ChildContent>
+        </RadzenBody>
+        <AuthorizeView>
+            <Authorized>
+                <RadzenSidebar @ref="sidebar0">
+                    <ChildContent>
+                        <RadzenPanelMenu style="height: 100%">
+                            <ChildContent>
+                                <RadzenPanelMenuItem Text="Dashboard" Path="dashboard">
+                                </RadzenPanelMenuItem>
+                                <RadzenPanelMenuItem Text="Reservas" Path="reservas">
+                                </RadzenPanelMenuItem>
+                            </ChildContent>
+                        </RadzenPanelMenu>
+                    </ChildContent>
+                </RadzenSidebar>
+            </Authorized>
+        </AuthorizeView>
+        <AuthorizeView>
+            <Authorized>
+                <RadzenFooter>
+                    <ChildContent>
+                        <RadzenLabel Text="Saweat.Web.Admin, Copyright Ⓒ 2022">
+                        </RadzenLabel>
+                    </ChildContent>
+                </RadzenFooter>
+            </Authorized>
+        </AuthorizeView>
+    </ChildContent>
 </RadzenLayout>

@@ -1,3 +1,4 @@
+using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +30,12 @@ namespace Saweat.Web.Admin
         public void ConfigureServices(IServiceCollection services)
         {
             this.OnConfiguringServices(services);
+            services
+                .AddAuth0WebAppAuthentication(options =>
+                {
+                    options.Domain = this.Configuration["Auth0:Domain"];
+                    options.ClientId = this.Configuration["Auth0:ClientId"];
+                });
 
             services.AddHttpContextAccessor();
             services.AddScoped<HttpClient>(serviceProvider =>
@@ -66,7 +73,6 @@ namespace Saweat.Web.Admin
             });
 
             services.AddApplicationServices();
-
             this.OnConfigureServices(services);
         }
 
@@ -90,8 +96,10 @@ namespace Saweat.Web.Admin
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
