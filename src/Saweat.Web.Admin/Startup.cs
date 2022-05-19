@@ -9,8 +9,10 @@ using Radzen;
 using Saweat.Application;
 using Saweat.Infrastructure;
 using Saweat.Persistence;
+using Saweat.Persistence.Contexts;
 using System;
 using System.Net.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace Saweat.Web.Admin
 {
@@ -106,6 +108,14 @@ namespace Saweat.Web.Admin
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+
+            using (var service = app.ApplicationServices.CreateScope())
+            {
+                using (var appContext = service.ServiceProvider.GetRequiredService<SaweatDbContext>())
+                {
+                    appContext.Migrate();
+                }
+            }
 
             this.OnConfigure(app, env);
         }

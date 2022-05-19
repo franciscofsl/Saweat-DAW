@@ -26,7 +26,17 @@ public partial class SaweatDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
 
         OnModelCreatingPartial(modelBuilder);
-    } 
+    }
 
+    public void Migrate()
+    {
+        try
+        {
+            this.Database.Migrate();
+        }
+        catch (Exception ex)
+        {
+        }
+    }
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
