@@ -9,8 +9,10 @@ public class TestServices
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public static TestServices Instance { get; } = new TestServices();
-
+    public static TestServices GetInstance()
+    {
+        return new();
+    }
 
     private TestServices()
     {

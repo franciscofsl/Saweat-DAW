@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Saweat.Test.Common\Saweat.Test.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Handlers\Queries\Bookings\" />
+  </ItemGroup>
+
 </Project>

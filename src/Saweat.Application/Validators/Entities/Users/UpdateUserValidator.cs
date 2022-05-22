@@ -1,15 +1,13 @@
-﻿using FluentValidation;
-
-namespace Saweat.Application.Validators.Users;
+﻿namespace Saweat.Application.Validators.Entities.Users;
 
 public class UpdateUserValidator : AbstractValidator<ApplicationUser>
 {
     public UpdateUserValidator()
     {
-        this.RuleFor(U => U.Name)
+        RuleFor(U => U.Name)
             .NotEmpty()
             .WithMessage("El nombre del usuario es obligatorio");
-        this.RuleFor(U => U.Lastnames)
+        RuleFor(u => u.Lastnames)
             .NotEmpty()
             .WithMessage("Los apellidos del usuario son obligatorios");
     }

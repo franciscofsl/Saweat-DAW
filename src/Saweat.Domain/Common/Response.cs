@@ -10,13 +10,13 @@ public class Response<T>
     public string[] ValidationErrors { get; set; } = Array.Empty<string>();
     public T? Data { get; set; }
 
-    public static Response<T> CreateResponse(T? data, bool success = true, params string[] errors)
+    public static Response<T> CreateResponse(T? data, bool success = true, IEnumerable<string>? errors = null)
     {
         return new Response<T>
         {
             Data = data,
             Success = success,
-            ValidationErrors = errors
+            ValidationErrors = errors?.ToArray() ?? Array.Empty<string>()
         };
     }
 }

@@ -33,6 +33,7 @@ public class UnitOfWork : IUnitOfWork
     {
         _repositories.Clear();
         DbContext.Dispose();
+        GC.SuppressFinalize(this);
     }
 
     #endregion
