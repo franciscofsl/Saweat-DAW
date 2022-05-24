@@ -3,7 +3,6 @@ using Saweat.Domain.Enums;
 
 namespace Saweat.Application.Test.Handlers.Commands.Bookings;
 
-[Collection("UpdateBookingCommandTest")]
 public class UpdateBookingCommandTest
 {
     [Fact]
@@ -93,7 +92,7 @@ public class UpdateBookingCommandTest
         };
         await mediator.Send(new UpdateBookingRequest { Booking = booking });
         booking.CustomerEmail = "new@correo.com";
-        await mediator.Send(new UpdateBookingRequest { Booking = booking });
+        await mediator.Send(new UpdateBookingRequest { Booking = booking }); 
         await mediator.Send(new DeleteBookingRequest { Booking = booking });
     }
 

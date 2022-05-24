@@ -2,7 +2,6 @@
 
 namespace Saweat.Application.Test.Handlers.Commands.OpeningTime;
 
-[Collection("UpdateOpeningPeriodCommandTest")]
 public class UpdateOpeningPeriodCommandTest
 {
     [Fact]

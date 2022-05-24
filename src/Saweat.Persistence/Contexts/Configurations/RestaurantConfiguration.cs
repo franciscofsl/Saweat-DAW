@@ -24,6 +24,21 @@ public partial class RestaurantConfiguration : IEntityTypeConfiguration<Restaura
         entity.Property(e => e.PostalCode).HasMaxLength(5);
 
         entity.Property(e => e.Provincy).HasMaxLength(100);
+
+        entity.HasData(new Restaurant
+        {
+            RestaurantId = "sutakito",
+            Description = "Sutakito Mexicano",
+            LongDescription = "La mejor comida mexicana artesanal en Santander",
+            Address = "Francisco de Quevedo 12, Bajo",
+            City = "Santander",
+            PostalCode = "30001",
+            Provincy = "Cantabria",
+            Phone = "642 63 99 73",
+            Enabled = true,
+            Photo = "https://sutakitomexicano.com/wp-content/uploads/2021/04/cropped-logo-sutakito.png"
+        });
+
         OnConfigurePartial(entity);
     }
 

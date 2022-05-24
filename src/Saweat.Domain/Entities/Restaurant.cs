@@ -3,7 +3,7 @@
 public class Restaurant
 {
     public Restaurant()
-    { 
+    {
     }
 
     public string RestaurantId { get; set; }

@@ -6,7 +6,6 @@ using System.Linq;
 
 namespace Saweat.Application.Test.Handlers.Queries.Bookings;
 
-[Collection("GetBookingsByStateTest")]
 public class GetBookingsByStateTest
 {
     [Fact]
@@ -14,19 +13,13 @@ public class GetBookingsByStateTest
     {
         var mediator = TestServices.GetInstance().GetService<IMediator>();
         var bookings = GetBookings();
-        await CreateBookings(mediator, bookings);
-        var opening = new OpeningPeriod
+        foreach (var booking in bookings)
         {
-            Day = DayOfWeek.Sunday,
-            StartHour = new TimeSpan(15, 0, 0),
-            EndHour = new TimeSpan(20, 0, 0)
-        };
-        await mediator.Send(new UpdateOpeningPeriodRequest { OpeningPeriod = opening });
+            await mediator.Send(new UpdateBookingRequest { Booking = booking });
+        }
         var response = await mediator.Send(new GetBookingsByStateRequest { State = BookingState.Undefinied });
         var states = response.Data.Select(b => b.State).Distinct();
         states.Should().HaveCount(3);
-        await mediator.Send(new DeleteOpeningPeriodRequest { OpeningPeriod = opening });
-        await RemoveBookings(mediator, bookings);
     }
 
     [Theory]
@@ -37,64 +30,22 @@ public class GetBookingsByStateTest
     {
         var mediator = TestServices.GetInstance().GetService<IMediator>();
         var bookings = GetBookings();
-        await CreateBookings(mediator, bookings);
+        foreach (var booking in bookings)
+        {
+            await mediator.Send(new UpdateBookingRequest { Booking = booking });
+        }
         var response = await mediator.Send(new GetBookingsByStateRequest { State = state });
         var states = response.Data.Select(b => b.State).Distinct();
         states.Should().HaveCount(1);
-        await RemoveBookings(mediator, bookings);
     }
 
-    public static async Task CreateBookings(IMediator mediator, Booking[] bookings)
+    private static IEnumerable<Booking> GetBookings()
     {
-        var tasks = bookings.Select(b => mediator.Send(new UpdateBookingRequest { Booking = b })).ToList();
-        await Task.WhenAll(tasks);
-    }
-
-    public static async Task RemoveBookings(IMediator mediator, Booking[] bookings)
-    {
-        var tasks = bookings.Select(b => mediator.Send(new DeleteBookingRequest { Booking = b })).ToList();
-        await Task.WhenAll(tasks); 
-    }
-
-    public static Booking[] GetBookings()
-    {
-        var bookings = new[]
+        return new Booking[]
         {
-            new Booking {  State = BookingState.Pending },
-            new Booking { State = BookingState.Cancel },
-            new Booking { State = BookingState.Approved },
-            new Booking { State = BookingState.Cancel },
-            new Booking { State = BookingState.Approved },
-            new Booking { State = BookingState.Approved },
-            new Booking { State = BookingState.Pending },
-            new Booking { State = BookingState.Approved },
-            new Booking {  State = BookingState.Approved },
-            new Booking {  State = BookingState.Pending },
-            new Booking {  State = BookingState.Approved },
-            new Booking {  State = BookingState.Cancel },
-            new Booking {  State = BookingState.Approved },
-            new Booking {  State = BookingState.Pending },
-            new Booking {  State = BookingState.Approved },
-            new Booking {  State = BookingState.Cancel },
-            new Booking {  State = BookingState.Approved },
-            new Booking {  State = BookingState.Pending },
-            new Booking { State = BookingState.Approved },
-            new Booking {  State = BookingState.Cancel },
-            new Booking { State = BookingState.Approved },
-            new Booking {  State = BookingState.Approved },
-            new Booking {  State = BookingState.Pending },
-            new Booking {  State = BookingState.Approved },
-            new Booking {  State = BookingState.Pending },
-            new Booking {  State = BookingState.Approved },
-            new Booking {  State = BookingState.Cancel }
+            new Booking{CustomerEmail = "mail@mail.com", CustomerName = "Test", StartDate = new DateTime(2022, 5, 5, 15, 0 ,0), State = BookingState.Approved, CustomerPhone = "a", PeopleAmount = 1},
+            new Booking{CustomerEmail = "mail@mail.com", CustomerName = "Test", StartDate = new DateTime(2022, 5, 5, 15, 0 ,0), State = BookingState.Cancel, CustomerPhone = "a", PeopleAmount = 1},
+            new Booking{CustomerEmail = "mail@mail.com", CustomerName = "Test", StartDate = new DateTime(2022, 5, 5, 15, 0 ,0), State = BookingState.Pending, CustomerPhone = "a", PeopleAmount = 1}
         };
-        foreach (var booking in bookings)
-        {
-            booking.CustomerEmail = "email@email.com";
-            booking.CustomerName = "email@email.com";
-            booking.CustomerPhone = "email@email.com";
-            booking.StartDate = new DateTime(2022, 5, 22, 18, 0, 0);
-        }
-        return bookings;
     }
 }

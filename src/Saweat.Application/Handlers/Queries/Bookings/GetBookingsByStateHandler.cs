@@ -13,8 +13,9 @@ public class GetBookingsByStateHandler : IRequestHandler<GetBookingsByStateReque
 
     public async Task<Response<IEnumerable<Booking>>> Handle(GetBookingsByStateRequest request, CancellationToken cancellationToken)
     {
+        var bookings = await _repository.GetAllAsync(token: cancellationToken);
         return request.State == BookingState.Undefinied
-            ? Response<IEnumerable<Booking>>.CreateResponse(await _repository.GetAllAsync(token: cancellationToken))
-            : Response<IEnumerable<Booking>>.CreateResponse(await _repository.GetAllAsync(filter: b => b.State == request.State, token: cancellationToken));
+            ? Response<IEnumerable<Booking>>.CreateResponse(bookings)
+            : Response<IEnumerable<Booking>>.CreateResponse(bookings.Where(b => b.State == request.State));
     }
 }

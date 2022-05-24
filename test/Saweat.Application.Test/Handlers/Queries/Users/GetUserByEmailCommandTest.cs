@@ -2,7 +2,6 @@
 
 namespace Saweat.Application.Test.Handlers.Queries.Users;
 
-[Collection("GetUserByEmailCommandTest")]
 public class GetUserByEmailCommandTest
 {
     [Fact]

@@ -1,6 +1,5 @@
 ﻿namespace Saweat.Application.Test.Handlers.Commands.Users;
 
-[Collection("UpdateUserTest")]
 public class UpdateUserTest
 {
     [Fact]

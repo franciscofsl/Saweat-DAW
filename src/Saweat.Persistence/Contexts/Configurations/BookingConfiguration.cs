@@ -1,4 +1,6 @@
-﻿namespace Saweat.Persistence.Contexts.Configurations;
+﻿using Saweat.Domain.Enums;
+
+namespace Saweat.Persistence.Contexts.Configurations;
 
 public partial class BookingConfiguration : IEntityTypeConfiguration<Booking>
 {
@@ -16,10 +18,9 @@ public partial class BookingConfiguration : IEntityTypeConfiguration<Booking>
 
         entity.Property(B => B.PeopleAmount).HasDefaultValue(1);
 
-        entity.Ignore(B => B.EndDate);
-
-        OnConfigurePartial(entity);
+        entity.Ignore(B => B.EndDate); 
     }
 
     partial void OnConfigurePartial(EntityTypeBuilder<Booking> entity);
+      
 }

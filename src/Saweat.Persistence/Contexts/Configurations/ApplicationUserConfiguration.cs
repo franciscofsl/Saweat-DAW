@@ -11,6 +11,12 @@ public partial class ApplicationUserConfiguration : IEntityTypeConfiguration<App
         entity.Property(U => U.Name).IsRequired(false);
         entity.Property(U => U.Lastnames).IsRequired(false);
 
+        entity.HasData(new ApplicationUser
+        {
+            Name = "Administrador",
+            Email = "adminsaweat@saweat.com"
+        });
+
         this.OnConfigurePartial(entity);
     }
 
