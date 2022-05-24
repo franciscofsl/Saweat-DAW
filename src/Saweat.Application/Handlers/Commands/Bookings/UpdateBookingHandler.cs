@@ -21,10 +21,17 @@ public class UpdateBookingHandler : IRequestHandler<UpdateBookingRequest, Respon
             return Response<Booking>.CreateResponse(booking, false, errors);
         }
         var repository = this._unitOfWork.GetRepository<Booking>();
-        var creationTask =  booking.BookingId > 0 
-            ? repository.UpdateAsync(booking, cancellationToken) 
-            : repository.InsertAsync(booking, cancellationToken);
-        await creationTask;
+
+        if (booking.BookingId > 0)
+        {
+            await repository.UpdateAsync(booking, cancellationToken);
+        }
+        else
+        {
+
+            await repository.InsertAsync(booking, cancellationToken);
+        }
+
         await this._unitOfWork.SaveChangesAsync(cancellationToken);
         return Response<Booking>.CreateResponse(booking);
     }
