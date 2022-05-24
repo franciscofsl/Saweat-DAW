@@ -1,53 +1,66 @@
-﻿namespace Saweat.Application.Test.Handlers.Commands.Users;
+﻿using Moq;
+using Saweat.Application.Validators.Entities.Users;
+
+namespace Saweat.Application.Test.Handlers.Commands.Users;
 
 public class UpdateUserTest
 {
     [Fact]
     public async Task Update_valid_user()
     {
-        var mediator = TestServices.GetInstance().GetService<IMediator>();
         var user = new ApplicationUser
         {
-            Email = "user@email.com"
+            Email = "test@email.com"
         };
-        await mediator.Send(new CreateUserRequest { User = user });
-        user.Name = "Name";
-        user.Lastnames = "Lastnames";
-        await mediator.Send(new UpdateUserRequest { User = user });
-        var repository = TestServices.GetInstance().GetService<IRepository<ApplicationUser>>();
-        var exists = await repository.ExistsAsync(U => U.Email == user.Email && U.Name == "Name");
-        exists.Should().BeTrue();
+        var repositoryMock = new Mock<IRepository<ApplicationUser>>();
+        var unitOfWorkMock = new Mock<IUnitOfWork>();
+        unitOfWorkMock.Setup(u => u.GetRepository<ApplicationUser>()).Returns(repositoryMock.Object);
+        var handler = new CreateUserHandler(unitOfWorkMock.Object);
+        await handler.Handle(new CreateUserRequest { User = user }, default);
+        user.Name = "TestUser";
+        user.Lastnames = "TestUser";
+        var updateHandler = new UpdateUserHandler(unitOfWorkMock.Object, new UpdateUserValidator());
+        var response = await updateHandler.Handle(new UpdateUserRequest() { User = user }, default);
+        response.ValidationErrors.Should().BeEmpty();
     }
 
     [Fact]
     public async Task Update_user_command_returns_error_with_name_error()
     {
-        var mediator = TestServices.GetInstance().GetService<IMediator>();
         var user = new ApplicationUser
         {
             Email = "updateUserWithoutName@email.com"
         };
-        await mediator.Send(new CreateUserRequest { User = user });
-        user.Lastnames = "Lastnames";
-        var response = await mediator.Send(new UpdateUserRequest { User = user });
+        var repositoryMock = new Mock<IRepository<ApplicationUser>>();
+        var unitOfWorkMock = new Mock<IUnitOfWork>();
+        unitOfWorkMock.Setup(u => u.GetRepository<ApplicationUser>()).Returns(repositoryMock.Object);
+        var handler = new CreateUserHandler(unitOfWorkMock.Object);
+        await handler.Handle(new CreateUserRequest { User = user }, default); 
+        user.Lastnames = "TestUser";
+        var updateHandler = new UpdateUserHandler(unitOfWorkMock.Object, new UpdateUserValidator());
+        var response = await updateHandler.Handle(new UpdateUserRequest() { User = user }, default);
         response.ValidationErrors
             .Should().HaveCount(1)
-            .And.ContainSingle(S => S == "El nombre del usuario es obligatorio");
+            .And.ContainSingle(s => s == "El nombre del usuario es obligatorio");
     }
 
     [Fact]
     public async Task Update_user_command_returns_error_with_empty_lastnames_error()
     {
-        var mediator = TestServices.GetInstance().GetService<IMediator>();
         var user = new ApplicationUser
         {
-            Email = "updateUserWithoutLastnames@email.com"
+            Email = "updateUserWithoutName@email.com"
         };
-        await mediator.Send(new CreateUserRequest { User = user });
+        var repositoryMock = new Mock<IRepository<ApplicationUser>>();
+        var unitOfWorkMock = new Mock<IUnitOfWork>();
+        unitOfWorkMock.Setup(u => u.GetRepository<ApplicationUser>()).Returns(repositoryMock.Object);
+        var handler = new CreateUserHandler(unitOfWorkMock.Object);
+        await handler.Handle(new CreateUserRequest { User = user }, default);
         user.Name = "Name";
-        var response = await mediator.Send(new UpdateUserRequest { User = user });
+        var updateHandler = new UpdateUserHandler(unitOfWorkMock.Object, new UpdateUserValidator());
+        var response = await updateHandler.Handle(new UpdateUserRequest() { User = user }, default);
         response.ValidationErrors
             .Should().HaveCount(1)
-            .And.ContainSingle(S => S == "Los apellidos del usuario son obligatorios");
+            .And.ContainSingle(s => s == "Los apellidos del usuario son obligatorios");
     }
 }

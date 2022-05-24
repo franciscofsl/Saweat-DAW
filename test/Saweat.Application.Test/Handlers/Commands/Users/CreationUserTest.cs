@@ -1,18 +1,21 @@
-﻿namespace Saweat.Application.Test.Handlers.Commands.Users;
+﻿using Moq;
+
+namespace Saweat.Application.Test.Handlers.Commands.Users;
 
 public class CreationUserTest
 {
     [Fact]
     public async Task Create_user()
     {
-        var mediator = TestServices.GetInstance().GetService<IMediator>();
         var newUser = new ApplicationUser
         {
             Email = "test@email.com"
         };
-        await mediator.Send(new CreateUserRequest { User = newUser });
-        var repository = TestServices.GetInstance().GetService<IRepository<ApplicationUser>>();
-        var exists = await repository.ExistsAsync(u => u.Email == newUser.Email);
-        exists.Should().BeTrue();
+        var repositoryMock = new Mock<IRepository<ApplicationUser>>();
+        var unitOfWorkMock = new Mock<IUnitOfWork>();
+        unitOfWorkMock.Setup(u => u.GetRepository<ApplicationUser>()).Returns(repositoryMock.Object);
+        var handler = new CreateUserHandler(unitOfWorkMock.Object);
+        var response = await handler.Handle(new CreateUserRequest { User = newUser }, default);
+        response.Success.Should().BeTrue();
     }
 }

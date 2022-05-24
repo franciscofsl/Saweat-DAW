@@ -1,6 +1,5 @@
 ﻿using Saweat.Application.Handlers.Queries.Bookings;
 using Saweat.Domain.Enums;
-using System;
 using System.Collections.Generic;
 
 namespace Saweat.Application.Test.Handlers.Queries.Bookings;
@@ -10,24 +9,40 @@ public class GetBookingsByStateTest
     [Fact]
     public async Task Get_bookings_by_undefinied_state_return_all_bookings()
     {
-        var mediator = TestServices.GetInstance().GetService<IMediator>();
-        var bookings = GetBookings();
-        await Create(mediator, bookings);
-        var response = await mediator.Send(new GetBookingsByStateRequest { State = BookingState.Undefinied });
-        response.Data.Should().HaveCountGreaterThan(0);
+        var repository = TestServices.GetMockRepository(GetBookings());
+        var handler = new GetBookingsByStateHandler(repository);
+        var response = await handler.Handle(new GetBookingsByStateRequest { State = BookingState.Undefinied }, default);
+        response.Data.Should().HaveCount(3);
     }
 
     [Fact]
     public async Task Get_bookings_by_approved_state_return_approved_bookings()
     {
-        var mediator = TestServices.GetInstance().GetService<IMediator>();
-        var bookings = GetBookings();
-        await Create(mediator, bookings);
-        var response = await mediator.Send(new GetBookingsByStateRequest { State = BookingState.Approved });
+        var repository = TestServices.GetMockRepository(GetBookings());
+        var handler = new GetBookingsByStateHandler(repository);
+        var response = await handler.Handle(new GetBookingsByStateRequest { State = BookingState.Approved }, default);
         response.Data.Should().HaveCount(1);
     }
 
-    private static IEnumerable<Booking> GetBookings()
+    [Fact]
+    public async Task Get_bookings_by_cancel_state_return_cancel_bookings()
+    {
+        var repository = TestServices.GetMockRepository(GetBookings());
+        var handler = new GetBookingsByStateHandler(repository);
+        var response = await handler.Handle(new GetBookingsByStateRequest { State = BookingState.Cancel }, default);
+        response.Data.Should().HaveCount(1);
+    }
+
+    [Fact]
+    public async Task Get_bookings_by_pending_state_return_pending_bookings()
+    {
+        var repository = TestServices.GetMockRepository(GetBookings());
+        var handler = new GetBookingsByStateHandler(repository);
+        var response = await handler.Handle(new GetBookingsByStateRequest { State = BookingState.Pending }, default);
+        response.Data.Should().HaveCount(1);
+    }
+
+    private static Booking[] GetBookings()
     {
         return new Booking[]
         {
@@ -37,19 +52,4 @@ public class GetBookingsByStateTest
         };
     }
 
-    private static async Task Create(IMediator mediator, IEnumerable<Booking> bookings)
-    {
-        foreach (var booking in bookings)
-        {
-            await mediator.Send(new UpdateBookingRequest { Booking = booking });
-        }
-    }
-
-    private static async Task Delete(IMediator mediator, IEnumerable<Booking> bookings)
-    {
-        foreach (var booking in bookings)
-        {
-            await mediator.Send(new DeleteBookingRequest { Booking = booking });
-        }
-    }
 }

@@ -7,10 +7,21 @@ public class GetUserByEmailCommandTest
     [Fact]
     public async Task Get_user_by_email()
     {
-        var mediator = TestServices.GetInstance().GetService<IMediator>();
-        await mediator.Send(new CreateUserRequest { User = new ApplicationUser{Email = "mail@mail.com"}});
-        var response = await mediator.Send(new GetUserByEmailRequest{Email = "mail@mail.com"});
+        var users = new ApplicationUser[] { 
+            new ApplicationUser
+            {
+                Email = "test@email.com"
+            }
+        };
+        var repositoryMock = TestServices.GetMockRepository<ApplicationUser>(users);
+
+        var unitOfWorkMock = new Mock<IUnitOfWork>();
+        unitOfWorkMock.Setup(u => u.GetRepository<ApplicationUser>())
+            .Returns(repositoryMock);
+
+        var handler = new GetUserByEmailHandler(repositoryMock);
+        var response = await handler.Handle(new GetUserByEmailRequest { Email = "test@email.com" }, default);
         response.Data.Should().NotBeNull();
-        response.Data.Email.Should().Be("mail@mail.com");
+        response.Data.Email.Should().Be("test@email.com");
     }
 }
