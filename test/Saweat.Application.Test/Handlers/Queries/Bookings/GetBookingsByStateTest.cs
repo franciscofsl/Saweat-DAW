@@ -30,7 +30,7 @@ public class GetBookingsByStateTest
     }
 
     [Theory]
-    [InlineData(BookingState.Denied)]
+    [InlineData(BookingState.Cancel)]
     [InlineData(BookingState.Approved)]
     [InlineData(BookingState.Pending)]
     public async void Get_bookings_by_state_return_bookings_of_request_state(BookingState state)
@@ -61,9 +61,9 @@ public class GetBookingsByStateTest
         var bookings = new[]
         {
             new Booking {  State = BookingState.Pending },
-            new Booking { State = BookingState.Denied },
+            new Booking { State = BookingState.Cancel },
             new Booking { State = BookingState.Approved },
-            new Booking { State = BookingState.Denied },
+            new Booking { State = BookingState.Cancel },
             new Booking { State = BookingState.Approved },
             new Booking { State = BookingState.Approved },
             new Booking { State = BookingState.Pending },
@@ -71,22 +71,22 @@ public class GetBookingsByStateTest
             new Booking {  State = BookingState.Approved },
             new Booking {  State = BookingState.Pending },
             new Booking {  State = BookingState.Approved },
-            new Booking {  State = BookingState.Denied },
+            new Booking {  State = BookingState.Cancel },
             new Booking {  State = BookingState.Approved },
             new Booking {  State = BookingState.Pending },
             new Booking {  State = BookingState.Approved },
-            new Booking {  State = BookingState.Denied },
+            new Booking {  State = BookingState.Cancel },
             new Booking {  State = BookingState.Approved },
             new Booking {  State = BookingState.Pending },
             new Booking { State = BookingState.Approved },
-            new Booking {  State = BookingState.Denied },
+            new Booking {  State = BookingState.Cancel },
             new Booking { State = BookingState.Approved },
             new Booking {  State = BookingState.Approved },
             new Booking {  State = BookingState.Pending },
             new Booking {  State = BookingState.Approved },
             new Booking {  State = BookingState.Pending },
             new Booking {  State = BookingState.Approved },
-            new Booking {  State = BookingState.Denied }
+            new Booking {  State = BookingState.Cancel }
         };
         foreach (var booking in bookings)
         {

@@ -1,0 +1,39 @@
+﻿@using Radzen.Blazor
+@using Saweat.Domain.Utils
+<div class="col-md-12 col-xl-3 col-lg-6">
+    <RadzenCard style="margin-bottom: 16px">
+        <ChildContent>
+            <div class="row">
+                <div class="col-4 align-items-center d-flex">
+                    <RadzenIcon Icon="@IconName" style="@IconStyle" />
+                </div>
+                <div class="col-sm-8">
+                    <RadzenHeading Size="H4" style="margin-bottom: 0px; text-align: right" Text="@Name" />
+                    <RadzenHeading Size="H4" style="color: #88989b; font-size: 11px; margin-bottom: 0px; text-align: right" Text="@ShortDescription" />
+                    <RadzenHeading Size="H4" style="@ValueStyle" Text="@Value.ToString()" /> 
+                </div>
+            </div>
+        </ChildContent>
+    </RadzenCard>
+</div>
+
+@code
+{
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public string IconName { get; set; }
+
+    [Parameter]
+    public string IconStyle { get; set; }
+
+    [Parameter]
+    public string ValueStyle { get; set; }
+
+    [Parameter]
+    public object Value { get; set; }
+
+    [Parameter]
+    public string ShortDescription { get; set; }
+}

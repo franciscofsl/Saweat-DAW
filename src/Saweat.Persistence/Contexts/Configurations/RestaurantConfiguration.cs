@@ -4,7 +4,7 @@ public partial class RestaurantConfiguration : IEntityTypeConfiguration<Restaura
 {
     public void Configure(EntityTypeBuilder<Restaurant> entity)
     {
-        entity.ToTable("Restaurant");
+        entity.ToTable("Restaurants");
 
         entity.Property(e => e.RestaurantId).HasMaxLength(25);
 

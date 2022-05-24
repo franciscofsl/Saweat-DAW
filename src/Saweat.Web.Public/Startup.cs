@@ -102,13 +102,13 @@ namespace Saweat.Web.Public
                 endpoints.MapFallbackToPage("/_Host");
             });
 
-            using (var service = app.ApplicationServices.CreateScope())
-            {
-                using (var appContext = service.ServiceProvider.GetRequiredService<SaweatDbContext>())
-                {
-                    appContext.Migrate();
-                }
-            }
+            //using (var service = app.ApplicationServices.CreateScope())
+            //{
+            //    using (var appContext = service.ServiceProvider.GetRequiredService<SaweatDbContext>())
+            //    {
+            //        appContext.Migrate();
+            //    }
+            //}
 
             this.OnConfigure(app, env);
         }

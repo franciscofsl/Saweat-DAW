@@ -4,7 +4,7 @@ public partial class OpeningPeriodConfiguration : IEntityTypeConfiguration<Openi
 {
     public void Configure(EntityTypeBuilder<OpeningPeriod> entity)
     {
-        entity.ToTable("OpeningPeriod");
+        entity.ToTable("OpeningPeriods");
 
         entity.HasKey(p => p.OpeningId);
 

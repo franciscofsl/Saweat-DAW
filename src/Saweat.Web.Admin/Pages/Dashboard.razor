@@ -6,9 +6,23 @@
 @using Microsoft.AspNetCore.Authorization
 @using Radzen
 @using Radzen.Blazor
+@using Saweat.Domain.Utils
+@using Saweat.Web.Admin.Shared.Widgets
+
+
 <PageTitle>Dashboard</PageTitle>
 <RadzenContent Container="main">
-  <ChildContent>
-    <RadzenHeading Size="H1" Text="Dashboard"></RadzenHeading>
-  </ChildContent>
+    <ChildContent>
+        <RadzenHeading Size="H1" Text="Dashboard"></RadzenHeading>
+
+
+        <BookingsWidgets />
+
+
+    </ChildContent>
 </RadzenContent>
+
+@code
+{
+
+}

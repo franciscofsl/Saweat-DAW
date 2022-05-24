@@ -1,0 +1,52 @@
+﻿@using Radzen.Blazor
+@using Saweat.Domain.Utils
+@inject IMediator Mediator
+<RadzenHeading Size="H3" Text="Reservas" />
+<div class="row">
+    <p />
+    <CountWidget Name="Reservas hoy"
+                 ShortDescription="Reservas que acudiran hoy"
+                 Value="@_countWidget.TodayBookings"
+                 IconName="turned_in_not"
+                 IconStyle="@GetIconStyle("82E0AA")"
+                 ValueStyle="@GetValueStyle("82E0AA")" />
+    <CountWidget Name="Cancelaciones hoy"
+                 ShortDescription="Reservas que acudiran hoy"
+                 Value="@_countWidget.TodayCancels"
+                 IconName="delete_outline"
+                 IconStyle="@GetIconStyle("F1948A")"
+                 ValueStyle="@GetValueStyle("F1948A")" /> 
+    <CountWidget Name="Proximas reservas"
+                 ShortDescription="Reservas aprobadas en los proximos 7 días"
+                 Value="@_countWidget.NextBookings"
+                 IconName="next_plan"
+                 IconStyle="@GetIconStyle("82E0AA")"
+                 ValueStyle="@GetValueStyle("82E0AA")" /> 
+    <CountWidget Name="Reservas pendientes"
+                 ShortDescription="Reservas pendientes en los proximos 14 días"
+                 Value="@_countWidget.PendingBookings"
+                 IconName="pending_actions"
+                 IconStyle="@GetIconStyle("F7DC6F")"
+                 ValueStyle="@GetValueStyle("F7DC6F")" />
+    <CountWidget Name="Cancelaciones proximas"
+                 ShortDescription="Reservas canceladas en los proximos 14 días"
+                 Value="@_countWidget.NextCancels"
+                 IconName="auto_delete"
+                 IconStyle="@GetIconStyle("F1948A")"
+                 ValueStyle="@GetValueStyle("F1948A")" />
+
+
+</div>
+
+@code {
+    private static string GetIconStyle(string color) => $"background-color: #{color}; font-size: 48px; height: 64px; width: 64px";
+    private static string GetValueStyle(string color) => $"color: #{color}; font-size: 24px; margin-bottom: 0px; margin-top: 13px; text-align: right";
+
+    private BookingCountWidget _countWidget = new BookingCountWidget();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Mediator.Send(new GetBookingCountWidgetsValuesRequest());
+        _countWidget = response.Data;
+    }
+}

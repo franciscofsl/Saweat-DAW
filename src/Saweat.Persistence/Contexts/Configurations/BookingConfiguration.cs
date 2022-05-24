@@ -4,7 +4,7 @@ public partial class BookingConfiguration : IEntityTypeConfiguration<Booking>
 {
     public void Configure(EntityTypeBuilder<Booking> entity)
     {
-        entity.ToTable("Booking");  
+        entity.ToTable("Bookings");  
 
         entity.Property(B => B.CustomerEmail).HasMaxLength(250);
 
