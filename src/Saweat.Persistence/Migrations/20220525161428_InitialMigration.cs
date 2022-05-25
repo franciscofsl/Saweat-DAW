@@ -5,10 +5,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Saweat.Persistence.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Allergens",
+                columns: table => new
+                {
+                    AllergenId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AllergenCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Allergens", x => x.AllergenId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Bookings",
                 columns: table => new
@@ -19,7 +34,8 @@ namespace Saweat.Persistence.Migrations
                     CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustomerEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustomerPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PeopleAmount = table.Column<int>(type: "int", nullable: false)
+                    PeopleAmount = table.Column<int>(type: "int", nullable: false),
+                    State = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,7 +43,7 @@ namespace Saweat.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OpeningPeriod",
+                name: "OpeningPeriods",
                 columns: table => new
                 {
                     OpeningId = table.Column<int>(type: "int", nullable: false)
@@ -38,11 +54,11 @@ namespace Saweat.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OpeningPeriod", x => x.OpeningId);
+                    table.PrimaryKey("PK_OpeningPeriods", x => x.OpeningId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Restaurant",
+                name: "Restaurants",
                 columns: table => new
                 {
                     RestaurantId = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
@@ -58,7 +74,7 @@ namespace Saweat.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Restaurant", x => x.RestaurantId);
+                    table.PrimaryKey("PK_Restaurants", x => x.RestaurantId);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,18 +89,49 @@ namespace Saweat.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Email);
                 });
+
+            migrationBuilder.InsertData(
+                table: "OpeningPeriods",
+                columns: new[] { "OpeningId", "Day", "EndHour", "StartHour" },
+                values: new object[,]
+                {
+                    { 1, 1, new TimeSpan(0, 16, 0, 0, 0), new TimeSpan(0, 13, 0, 0, 0) },
+                    { 2, 1, new TimeSpan(0, 0, 0, 0, 0), new TimeSpan(0, 20, 0, 0, 0) },
+                    { 3, 2, new TimeSpan(0, 16, 0, 0, 0), new TimeSpan(0, 13, 0, 0, 0) },
+                    { 4, 2, new TimeSpan(0, 0, 0, 0, 0), new TimeSpan(0, 20, 0, 0, 0) },
+                    { 5, 3, new TimeSpan(0, 16, 0, 0, 0), new TimeSpan(0, 13, 0, 0, 0) },
+                    { 6, 3, new TimeSpan(0, 0, 0, 0, 0), new TimeSpan(0, 20, 0, 0, 0) },
+                    { 7, 4, new TimeSpan(0, 16, 0, 0, 0), new TimeSpan(0, 13, 0, 0, 0) },
+                    { 8, 4, new TimeSpan(0, 0, 0, 0, 0), new TimeSpan(0, 20, 0, 0, 0) },
+                    { 9, 5, new TimeSpan(0, 16, 0, 0, 0), new TimeSpan(0, 13, 0, 0, 0) },
+                    { 10, 5, new TimeSpan(0, 0, 0, 0, 0), new TimeSpan(0, 20, 0, 0, 0) },
+                    { 11, 6, new TimeSpan(0, 0, 0, 0, 0), new TimeSpan(0, 13, 0, 0, 0) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Restaurants",
+                columns: new[] { "RestaurantId", "Address", "City", "Description", "Enabled", "LongDescription", "Phone", "Photo", "PostalCode", "Provincy" },
+                values: new object[] { "sutakito", "Francisco de Quevedo 12, Bajo", "Santander", "Sutakito Mexicano", true, "La mejor comida mexicana artesanal en Santander", "642 63 99 73", "https://sutakitomexicano.com/wp-content/uploads/2021/04/cropped-logo-sutakito.png", "30001", "Cantabria" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Email", "Lastnames", "Name" },
+                values: new object[] { "adminsaweat@saweat.com", "", "Administrador" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Allergens");
+
+            migrationBuilder.DropTable(
                 name: "Bookings");
 
             migrationBuilder.DropTable(
-                name: "OpeningPeriod");
+                name: "OpeningPeriods");
 
             migrationBuilder.DropTable(
-                name: "Restaurant");
+                name: "Restaurants");
 
             migrationBuilder.DropTable(
                 name: "Users");

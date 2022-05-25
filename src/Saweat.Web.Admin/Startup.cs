@@ -109,6 +109,7 @@ namespace Saweat.Web.Admin
                 endpoints.MapFallbackToPage("/_Host");
             });
 
+
             using (var service = app.ApplicationServices.CreateScope())
             {
                 using (var appContext = service.ServiceProvider.GetRequiredService<SaweatDbContext>())

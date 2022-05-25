@@ -1,0 +1,73 @@
+﻿@page "/allergens"
+@using Saweat.Application.Handlers.Queries.Allergens
+@using Saweat.Application.Handlers.Commands.Bookings
+@using Saweat.Application.Handlers.Commands.Allergens
+@inject NavigationManager navigationManager
+@inject IMediator Mediator
+
+<RadzenHeading Size="H1" Text="Alergenos"></RadzenHeading>
+
+<RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" Text="Añadir" Click="@NewAllergen" />
+<RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="create" Text="Modificar" Click="@ModifyAllergen" />
+<RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete_outline" Text="Eliminar" Click="@RemoveAllergen" />
+<p />
+<RadzenDataGrid AllowFiltering="true"
+                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                AllowPaging="true" PageSize="15"
+                AllowSorting="true"
+                Data="@_allergens"
+                TItem="Allergen"
+                AllowColumnResize="true"
+                SelectionMode="DataGridSelectionMode.Single"
+                @bind-Value="@_selectedAllergens"
+                EmptyText="No hay alergenos">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="Allergen" Property="AllergenCode" Title="Id" />
+        <RadzenDataGridColumn TItem="Allergen" Property="Name" Title="Nombre" />
+        <RadzenDataGridColumn TItem="Allergen" Property="Icon" Title="Icono" /> 
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+
+    private List<Allergen> _allergens;
+    private IList<Allergen> _selectedAllergens;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshAllergens();
+    }
+
+    private async Task RefreshAllergens()
+    {
+        var response = await Mediator.Send(new GetAllAllergensRequest());
+        _allergens = response.Data.ToList();
+    }
+
+    public void NewAllergen()
+    {
+        navigationManager.NavigateTo("/allergens/0");
+    }
+
+    public void ModifyAllergen()
+    {
+        if (_selectedAllergens is null || _selectedAllergens.Any() == false)
+        {
+            return;
+        }
+        var selectedAllergen = _selectedAllergens.FirstOrDefault();
+        navigationManager.NavigateTo($"/allergens/{selectedAllergen.AllergenId}");
+    }
+
+    public async Task RemoveAllergen()
+    {
+        if (_selectedAllergens is null || _selectedAllergens.Any() == false)
+        {
+            return;
+        }
+        var selectedAllergen = _selectedAllergens.FirstOrDefault();
+        await Mediator.Send(new DeleteAllergenRequest { Allergen = selectedAllergen });
+        await RefreshAllergens();
+    }
+}

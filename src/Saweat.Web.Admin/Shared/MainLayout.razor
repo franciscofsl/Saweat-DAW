@@ -41,12 +41,16 @@
                 <RadzenSidebar @ref="sidebar0">
                     <ChildContent>
                         <RadzenPanelMenu style="height: 100%">
-                            <ChildContent>
-                                <RadzenPanelMenuItem Text="Dashboard" Path="dashboard">
+                            <RadzenPanelMenuItem Icon="dashboard" Text="Dashboard" Path="dashboard">
                                 </RadzenPanelMenuItem>
-                                <RadzenPanelMenuItem Text="Reservas" Path="bookings">
-                                </RadzenPanelMenuItem>
-                            </ChildContent>
+                            <RadzenPanelMenuItem Icon="import_contacts" Text="Reservas" Path="bookings">
+                            </RadzenPanelMenuItem>
+                            
+                            <RadzenPanelMenuItem Icon="settings" Text="Configuracion">
+                                <ChildContent>
+                                    <RadzenPanelMenuItem Path="allergens" Text="Alergenos"/>
+                                </ChildContent>
+                            </RadzenPanelMenuItem>
                         </RadzenPanelMenu>
                     </ChildContent>
                 </RadzenSidebar>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Saweat.Persistence.Contexts;
 
@@ -11,9 +12,10 @@ using Saweat.Persistence.Contexts;
 namespace Saweat.Persistence.Migrations
 {
     [DbContext(typeof(SaweatDbContext))]
-    partial class SaweatDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220525161428_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

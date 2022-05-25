@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Handlers\Commands\Allergens\" />
     <Folder Include="Handlers\Queries\Bookings\" />
   </ItemGroup>
 

@@ -15,6 +15,7 @@ public partial class SaweatDbContext : DbContext
     public virtual DbSet<ApplicationUser> Users { get; set; }
     public virtual DbSet<Booking> Bookings { get; set; }
     public virtual DbSet<OpeningPeriod> OpeningPeriods { get; set; }
+    public virtual DbSet<Allergen> Allergens { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
