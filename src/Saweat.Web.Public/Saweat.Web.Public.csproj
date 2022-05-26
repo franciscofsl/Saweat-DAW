@@ -1,28 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <NoWarn>CS0168,CS1998,BL9993,CS0649,CS0436,0436</NoWarn>
-    <TargetFramework>net6.0</TargetFramework>
-    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
-  </PropertyGroup>
+    <PropertyGroup>
+        <NoWarn>CS0168,CS1998,BL9993,CS0649,CS0436,0436</NoWarn>
+        <TargetFramework>net6.0</TargetFramework>
+        <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.5">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="System.ComponentModel.Annotations" Version="6.0.0-preview.4.21253.7" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
-    <PackageReference Include="Radzen.Blazor" Version="3.18.8" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.5"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.5">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="System.ComponentModel.Annotations" Version="6.0.0-preview.4.21253.7"/>
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0"/>
+        <PackageReference Include="Radzen.Blazor" Version="3.18.8"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Saweat.Application\Saweat.Application.csproj" />
-    <ProjectReference Include="..\Saweat.Domain\Saweat.Domain.csproj" />
-    <ProjectReference Include="..\Saweat.Infrastructure\Saweat.Infrastructure.csproj" />
-    <ProjectReference Include="..\Saweat.Persistence\Saweat.Persistence.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Saweat.Application\Saweat.Application.csproj"/>
+        <ProjectReference Include="..\Saweat.Domain\Saweat.Domain.csproj"/>
+        <ProjectReference Include="..\Saweat.Infrastructure\Saweat.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Saweat.Persistence\Saweat.Persistence.csproj"/>
+    </ItemGroup>
 
 </Project>

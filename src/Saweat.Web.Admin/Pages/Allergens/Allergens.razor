@@ -1,16 +1,15 @@
 ﻿@page "/allergens"
 @using Saweat.Application.Handlers.Queries.Allergens
-@using Saweat.Application.Handlers.Commands.Bookings
 @using Saweat.Application.Handlers.Commands.Allergens
 @inject NavigationManager navigationManager
 @inject IMediator Mediator
 
 <RadzenHeading Size="H1" Text="Alergenos"></RadzenHeading>
 
-<RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" Text="Añadir" Click="@NewAllergen" />
-<RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="create" Text="Modificar" Click="@ModifyAllergen" />
-<RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete_outline" Text="Eliminar" Click="@RemoveAllergen" />
-<p />
+<RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" Text="Añadir" Click="@NewAllergen"/>
+<RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="create" Text="Modificar" Click="@ModifyAllergen"/>
+<RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete_outline" Text="Eliminar" Click="@RemoveAllergen"/>
+<p/>
 <RadzenDataGrid AllowFiltering="true"
                 FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                 AllowPaging="true" PageSize="15"
@@ -23,15 +22,16 @@
                 EmptyText="No hay alergenos">
 
     <Columns>
-        <RadzenDataGridColumn TItem="Allergen" Property="AllergenCode" Title="Id" />
-        <RadzenDataGridColumn TItem="Allergen" Property="Name" Title="Nombre" />
-        <RadzenDataGridColumn TItem="Allergen" Property="Icon" Title="Icono" /> 
+        <RadzenDataGridColumn TItem="Allergen" Property="AllergenCode" Title="Id"/>
+        <RadzenDataGridColumn TItem="Allergen" Property="Name" Title="Nombre"/>
+        <RadzenDataGridColumn TItem="Allergen" Property="Icon" Title="Icono"/>
     </Columns>
 </RadzenDataGrid>
 
 @code {
 
     private List<Allergen> _allergens;
+
     private IList<Allergen> _selectedAllergens;
 
     protected override async Task OnInitializedAsync()
@@ -67,7 +67,10 @@
             return;
         }
         var selectedAllergen = _selectedAllergens.FirstOrDefault();
-        await Mediator.Send(new DeleteAllergenRequest { Allergen = selectedAllergen });
+        await Mediator.Send(new DeleteAllergenRequest
+        {
+            Allergen = selectedAllergen
+        });
         await RefreshAllergens();
     }
 }

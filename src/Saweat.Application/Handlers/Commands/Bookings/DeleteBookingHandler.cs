@@ -6,15 +6,15 @@ public class DeleteBookingHandler : IRequestHandler<DeleteBookingRequest, Respon
 
     public DeleteBookingHandler(IUnitOfWork unitOfWork)
     {
-        this._unitOfWork = unitOfWork;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Response<Booking>> Handle(DeleteBookingRequest request, CancellationToken cancellationToken)
     {
         var booking = request.Booking;
-        var repository = this._unitOfWork.GetRepository<Booking>();
+        var repository = _unitOfWork.GetRepository<Booking>();
         await repository.DeleteAsync(booking, cancellationToken);
-        await this._unitOfWork.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         return Response<Booking>.CreateResponse(booking);
     }
 }

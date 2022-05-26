@@ -19,12 +19,12 @@ public class Repository<TModel> : IRepository<TModel> where TModel : class
 
     public async Task DeleteAsync(TModel entity, CancellationToken token = default)
     {
-        await Task.Run(() => _context.Set<TModel>().Remove(entity), token);
+        await Task.Run(function: () => _context.Set<TModel>().Remove(entity), token);
     }
 
     public async Task DeleteAsync(IEnumerable<TModel> entities, CancellationToken token = default)
     {
-        await Task.Run(() => _context.Set<TModel>().RemoveRange(entities), token);
+        await Task.Run(action: () => _context.Set<TModel>().RemoveRange(entities), token);
     }
 
     public async Task<bool> ExistsAsync(Expression<Func<TModel, bool>>? filter = null,
@@ -88,12 +88,12 @@ public class Repository<TModel> : IRepository<TModel> where TModel : class
 
     public async Task UpdateAsync(TModel entity, CancellationToken token = default)
     {
-        await Task.Run(() => _context.Set<TModel>().Update(entity), token);
+        await Task.Run(function: () => _context.Set<TModel>().Update(entity), token);
     }
 
     public async Task UpdateAsync(IEnumerable<TModel> entities, CancellationToken token = default)
     {
-        await Task.Run(() => _context.Set<TModel>().UpdateRange(entities), token);
+        await Task.Run(action: () => _context.Set<TModel>().UpdateRange(entities), token);
     }
 
     private static Expression<Func<TModel, bool>> GetPrimaryKeyExpression(object idValue, string primaryKeyName,
@@ -103,7 +103,7 @@ public class Repository<TModel> : IRepository<TModel> where TModel : class
 
         if (idValue == null) throw new ArgumentNullException(nameof(idValue));
 
-        var parameterExpression = Expression.Parameter(typeof(TModel), "entity");
+        var parameterExpression = Expression.Parameter(typeof(TModel), name: "entity");
         var memberExpression = Expression.Property(parameterExpression, primaryKeyName);
         var constantExpression = Expression.Constant(idValue, primaryKeyType ?? typeof(object));
         var binaryExpression = Expression.Equal(memberExpression, constantExpression);

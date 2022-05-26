@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Saweat.Application.Handlers.Commands.Users;
+﻿namespace Saweat.Application.Handlers.Commands.Users;
 
 public class UpdateUserHandler : IRequestHandler<UpdateUserRequest, Response<ApplicationUser>>
 {

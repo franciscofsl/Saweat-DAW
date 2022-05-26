@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Radzen;
-using Radzen.Blazor;
+﻿namespace Saweat.Web.Public.Pages;
 
-namespace Saweat.Web.Public.Pages
+public partial class HomeComponent
 {
-    public partial class HomeComponent
-    {
-
-    }
 }

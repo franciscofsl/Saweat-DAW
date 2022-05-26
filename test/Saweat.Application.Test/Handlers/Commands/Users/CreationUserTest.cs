@@ -1,6 +1,4 @@
-﻿using Moq;
-
-namespace Saweat.Application.Test.Handlers.Commands.Users;
+﻿namespace Saweat.Application.Test.Handlers.Commands.Users;
 
 public class CreationUserTest
 {
@@ -15,7 +13,10 @@ public class CreationUserTest
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         unitOfWorkMock.Setup(u => u.GetRepository<ApplicationUser>()).Returns(repositoryMock.Object);
         var handler = new CreateUserHandler(unitOfWorkMock.Object);
-        var response = await handler.Handle(new CreateUserRequest { User = newUser }, default);
+        var response = await handler.Handle(new CreateUserRequest
+        {
+            User = newUser
+        }, default);
         response.Success.Should().BeTrue();
     }
 }

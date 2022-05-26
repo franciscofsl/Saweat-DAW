@@ -2,7 +2,7 @@
 
 public class DeleteBookingHandlerTest
 {
-      [Fact]
+    [Fact]
     public async Task Delete_opening_period()
     {
         var booking = new Booking
@@ -12,9 +12,12 @@ public class DeleteBookingHandlerTest
             CustomerPhone = "5476541"
         };
         var repository = TestServices.GetMockRepository(booking);
-        var unitOfWork = TestServices.GetMockUnitOfWork<Booking>(repository);
+        var unitOfWork = TestServices.GetMockUnitOfWork(repository);
         var handler = new DeleteBookingHandler(unitOfWork);
-        var response = await handler.Handle(new DeleteBookingRequest() { Booking = booking }, default);
+        var response = await handler.Handle(new DeleteBookingRequest
+        {
+            Booking = booking
+        }, default);
         response.ValidationErrors.Should().BeEmpty();
     }
 }

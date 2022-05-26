@@ -15,10 +15,13 @@ public class UpdateAllergenHandlerTest
         };
         var unitOfWork = TestServices.GetMockUnitOfWork<Allergen>();
         var handler = new UpdateAllergenHandler(unitOfWork);
-        var response = await handler.Handle(new UpdateAllergenRequest { Allergen = allergen }, default);
+        var response = await handler.Handle(new UpdateAllergenRequest
+        {
+            Allergen = allergen
+        }, default);
         response.ValidationErrors.Should().BeEmpty();
     }
-    
+
     [Fact]
     public async Task Update_valid_allergen()
     {
@@ -30,9 +33,12 @@ public class UpdateAllergenHandlerTest
             Icon = ""
         };
         var repository = TestServices.GetMockRepository(allergen);
-        var unitOfWork = TestServices.GetMockUnitOfWork<Allergen>(repository);
+        var unitOfWork = TestServices.GetMockUnitOfWork(repository);
         var handler = new UpdateAllergenHandler(unitOfWork);
-        var response = await handler.Handle(new UpdateAllergenRequest { Allergen = allergen }, default);
+        var response = await handler.Handle(new UpdateAllergenRequest
+        {
+            Allergen = allergen
+        }, default);
         response.ValidationErrors.Should().BeEmpty();
     }
 }

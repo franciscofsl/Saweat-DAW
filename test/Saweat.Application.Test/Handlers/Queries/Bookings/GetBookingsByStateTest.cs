@@ -1,6 +1,5 @@
 ﻿using Saweat.Application.Handlers.Queries.Bookings;
 using Saweat.Domain.Enums;
-using System.Collections.Generic;
 
 namespace Saweat.Application.Test.Handlers.Queries.Bookings;
 
@@ -11,7 +10,10 @@ public class GetBookingsByStateTest
     {
         var repository = TestServices.GetMockRepository(GetBookings());
         var handler = new GetBookingsByStateHandler(repository);
-        var response = await handler.Handle(new GetBookingsByStateRequest { State = BookingState.Undefinied }, default);
+        var response = await handler.Handle(new GetBookingsByStateRequest
+        {
+            State = BookingState.Undefinied
+        }, default);
         response.Data.Should().HaveCount(3);
     }
 
@@ -20,7 +22,10 @@ public class GetBookingsByStateTest
     {
         var repository = TestServices.GetMockRepository(GetBookings());
         var handler = new GetBookingsByStateHandler(repository);
-        var response = await handler.Handle(new GetBookingsByStateRequest { State = BookingState.Approved }, default);
+        var response = await handler.Handle(new GetBookingsByStateRequest
+        {
+            State = BookingState.Approved
+        }, default);
         response.Data.Should().HaveCount(1);
     }
 
@@ -29,7 +34,10 @@ public class GetBookingsByStateTest
     {
         var repository = TestServices.GetMockRepository(GetBookings());
         var handler = new GetBookingsByStateHandler(repository);
-        var response = await handler.Handle(new GetBookingsByStateRequest { State = BookingState.Cancel }, default);
+        var response = await handler.Handle(new GetBookingsByStateRequest
+        {
+            State = BookingState.Cancel
+        }, default);
         response.Data.Should().HaveCount(1);
     }
 
@@ -38,18 +46,44 @@ public class GetBookingsByStateTest
     {
         var repository = TestServices.GetMockRepository(GetBookings());
         var handler = new GetBookingsByStateHandler(repository);
-        var response = await handler.Handle(new GetBookingsByStateRequest { State = BookingState.Pending }, default);
+        var response = await handler.Handle(new GetBookingsByStateRequest
+        {
+            State = BookingState.Pending
+        }, default);
         response.Data.Should().HaveCount(1);
     }
 
     private static Booking[] GetBookings()
     {
-        return new Booking[]
+        return new[]
         {
-            new Booking{CustomerEmail = "mail@mail.com", CustomerName = "Test", StartDate = new DateTime(2022, 5, 5, 15, 0 ,0), State = BookingState.Approved, CustomerPhone = "a", PeopleAmount = 1},
-            new Booking{CustomerEmail = "mail@mail.com", CustomerName = "Test", StartDate = new DateTime(2022, 5, 5, 15, 0 ,0), State = BookingState.Cancel, CustomerPhone = "a", PeopleAmount = 1},
-            new Booking{CustomerEmail = "mail@mail.com", CustomerName = "Test", StartDate = new DateTime(2022, 5, 5, 15, 0 ,0), State = BookingState.Pending, CustomerPhone = "a", PeopleAmount = 1}
+            new Booking
+            {
+                CustomerEmail = "mail@mail.com",
+                CustomerName = "Test",
+                StartDate = new DateTime(2022, 5, 5, 15, 0, 0),
+                State = BookingState.Approved,
+                CustomerPhone = "a",
+                PeopleAmount = 1
+            },
+            new Booking
+            {
+                CustomerEmail = "mail@mail.com",
+                CustomerName = "Test",
+                StartDate = new DateTime(2022, 5, 5, 15, 0, 0),
+                State = BookingState.Cancel,
+                CustomerPhone = "a",
+                PeopleAmount = 1
+            },
+            new Booking
+            {
+                CustomerEmail = "mail@mail.com",
+                CustomerName = "Test",
+                StartDate = new DateTime(2022, 5, 5, 15, 0, 0),
+                State = BookingState.Pending,
+                CustomerPhone = "a",
+                PeopleAmount = 1
+            }
         };
     }
-
 }

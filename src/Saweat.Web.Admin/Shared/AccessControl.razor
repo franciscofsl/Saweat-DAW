@@ -1,15 +1,11 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @using Radzen.Blazor
-@using MediatR
 @using Saweat.Application.Handlers.Commands.Users
-@using Saweat.Application.Handlers.Queries.Users
-@using Saweat.Domain.Entities
-
 <RadzenProfileMenu>
-     <ChildContent>
-         <RadzenProfileMenuItem Path="profile" Icon="settings" Text="Perfil" /> 
-         <RadzenProfileMenuItem Text="Logout" Value="Logout" Icon="power_settings_new" />
-     </ChildContent>
+    <ChildContent>
+        <RadzenProfileMenuItem Path="profile" Icon="settings" Text="Perfil"/>
+        <RadzenProfileMenuItem Text="Logout" Value="Logout" Icon="power_settings_new"/>
+    </ChildContent>
     <Template>
         <RadzenLabel Text="@CurrentUser.Name">
         </RadzenLabel>
@@ -25,13 +21,13 @@
     [Inject]
     public IMediator Mediator { get; set; }
 
-    [Inject] 
+    [Inject]
     public AuthenticationStateProvider AuthState { get; set; }
 
     public ApplicationUser CurrentUser { get; set; } = new ApplicationUser();
-    
+
     public string Picture = "";
-    
+
     private AuthenticationState _currentState;
 
     protected override async Task OnInitializedAsync()
@@ -46,14 +42,26 @@
             .Select(c => c.Value)
             .FirstOrDefault() ?? string.Empty;
 
-        var user = await Mediator.Send(new GetUserByEmailRequest{Email = email});
+        var user = await Mediator.Send(new GetUserByEmailRequest
+        {
+            Email = email
+        });
         if (user.Data is null)
         {
-            await Mediator.Send(new CreateUserRequest{User = new ApplicationUser{Email = email}});
+            await Mediator.Send(new CreateUserRequest
+            {
+                User = new ApplicationUser
+                {
+                    Email = email
+                }
+            });
             CurrentUser.Name = email;
             return;
         }
-        user = await Mediator.Send(new GetUserByEmailRequest{Email = email});
+        user = await Mediator.Send(new GetUserByEmailRequest
+        {
+            Email = email
+        });
         CurrentUser = user.Data;
     }
 

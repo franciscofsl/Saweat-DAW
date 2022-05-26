@@ -3,7 +3,7 @@
     The Router component displays whichever component has a @page
     directive matching the current URI.
 *@
- 
+
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Startup).Assembly">
         <Found Context="routeData">
@@ -13,10 +13,10 @@
                 </Authorizing>
                 <NotAuthorized>
                     <h1>No esta autorizado</h1>
-                    <p>Para poder ver esta seccion es necesario <a href="login?redirectUri=/">iniciar sesión</a>.</p> 
+                    <p>Para poder ver esta seccion es necesario <a href="login?redirectUri=/">iniciar sesión</a>.</p>
                 </NotAuthorized>
             </AuthorizeRouteView>
-            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
         </Found>
         <NotFound>
             <PageTitle>Not found</PageTitle>

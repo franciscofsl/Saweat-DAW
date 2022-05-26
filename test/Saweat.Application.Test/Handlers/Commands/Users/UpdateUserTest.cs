@@ -1,5 +1,4 @@
-﻿using Moq;
-using Saweat.Application.Validators.Entities.Users;
+﻿using Saweat.Application.Validators.Entities.Users;
 
 namespace Saweat.Application.Test.Handlers.Commands.Users;
 
@@ -16,11 +15,17 @@ public class UpdateUserTest
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         unitOfWorkMock.Setup(u => u.GetRepository<ApplicationUser>()).Returns(repositoryMock.Object);
         var handler = new CreateUserHandler(unitOfWorkMock.Object);
-        await handler.Handle(new CreateUserRequest { User = user }, default);
+        await handler.Handle(new CreateUserRequest
+        {
+            User = user
+        }, default);
         user.Name = "TestUser";
         user.Lastnames = "TestUser";
         var updateHandler = new UpdateUserHandler(unitOfWorkMock.Object, new UpdateUserValidator());
-        var response = await updateHandler.Handle(new UpdateUserRequest() { User = user }, default);
+        var response = await updateHandler.Handle(new UpdateUserRequest
+        {
+            User = user
+        }, default);
         response.ValidationErrors.Should().BeEmpty();
     }
 
@@ -35,10 +40,16 @@ public class UpdateUserTest
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         unitOfWorkMock.Setup(u => u.GetRepository<ApplicationUser>()).Returns(repositoryMock.Object);
         var handler = new CreateUserHandler(unitOfWorkMock.Object);
-        await handler.Handle(new CreateUserRequest { User = user }, default); 
+        await handler.Handle(new CreateUserRequest
+        {
+            User = user
+        }, default);
         user.Lastnames = "TestUser";
         var updateHandler = new UpdateUserHandler(unitOfWorkMock.Object, new UpdateUserValidator());
-        var response = await updateHandler.Handle(new UpdateUserRequest() { User = user }, default);
+        var response = await updateHandler.Handle(new UpdateUserRequest
+        {
+            User = user
+        }, default);
         response.ValidationErrors
             .Should().HaveCount(1)
             .And.ContainSingle(s => s == "El nombre del usuario es obligatorio");
@@ -55,10 +66,16 @@ public class UpdateUserTest
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         unitOfWorkMock.Setup(u => u.GetRepository<ApplicationUser>()).Returns(repositoryMock.Object);
         var handler = new CreateUserHandler(unitOfWorkMock.Object);
-        await handler.Handle(new CreateUserRequest { User = user }, default);
+        await handler.Handle(new CreateUserRequest
+        {
+            User = user
+        }, default);
         user.Name = "Name";
         var updateHandler = new UpdateUserHandler(unitOfWorkMock.Object, new UpdateUserValidator());
-        var response = await updateHandler.Handle(new UpdateUserRequest() { User = user }, default);
+        var response = await updateHandler.Handle(new UpdateUserRequest
+        {
+            User = user
+        }, default);
         response.ValidationErrors
             .Should().HaveCount(1)
             .And.ContainSingle(s => s == "Los apellidos del usuario son obligatorios");

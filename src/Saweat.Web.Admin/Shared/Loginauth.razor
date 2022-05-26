@@ -1,34 +1,36 @@
 ﻿@page "/loginauth"
 
 <div class="container my-4">
-    
+
     <div class="row">
         <div class="col-lg-6 offset-lg-3">
-                 <RadzenFieldset Text="Personal information">
-                    <div class="row mb-5">
-                        <div class="col-md-4">
-                            <RadzenLabel Text="First Name" />
-                            <small style="display: block">(3-10 characters)</small>
-                        </div>
-                        <div class="col">
-                           @* <RadzenTextBox style="display: block" Name="FirstName" @bind-Value=@model.FirstName Class="w-100" />
+            <RadzenFieldset Text="Personal information">
+                <div class="row mb-5">
+                    <div class="col-md-4">
+                        <RadzenLabel Text="First Name"/>
+                        <small style="display: block">(3-10 characters)</small>
+                    </div>
+                    <div class="col">
+                        @* <RadzenTextBox style="display: block" Name="FirstName" @bind-Value=@model.FirstName Class="w-100" />
                             <RadzenLengthValidator Component="FirstName" Min="3" Text="First name should be at least 3 characters" Popup=@popup Style="position: absolute" />
                             <RadzenLengthValidator Component="FirstName"  Max="10" Text="First name should be at most 10 characters" Popup=@popup Style="position: absolute" />
-                    *@    </div>
+                    *@
                     </div>
-                    <div class="row mb-5">
-                        <div class="col-md-4">
-                            <RadzenLabel Text="Last Name" />
-                            <small style="display: block">(3-10 characters)</small>
-                        </div>
-                        <div class="col">
-                           @* <RadzenTextBox style="display: block" Name="LastName" @bind-Value=@model.LastName Class="w-100" />
+                </div>
+                <div class="row mb-5">
+                    <div class="col-md-4">
+                        <RadzenLabel Text="Last Name"/>
+                        <small style="display: block">(3-10 characters)</small>
+                    </div>
+                    <div class="col">
+                        @* <RadzenTextBox style="display: block" Name="LastName" @bind-Value=@model.LastName Class="w-100" />
                             <RadzenLengthValidator Component="LastName" Min="3" Text="Last name should be at least 3 characters" Popup=@popup Style="position: absolute" />
                             <RadzenLengthValidator Component="LastName"  Max="10" Text="Last name should be at most 10 characters" Popup=@popup Style="position: absolute" />
-                    *@    </div>
+                    *@
                     </div>
-                    <RadzenButton ButtonType="ButtonType.Submit" Text="Submit"></RadzenButton>
-                </RadzenFieldset> 
+                </div>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Submit"></RadzenButton>
+            </RadzenFieldset>
         </div>
     </div>
 </div>

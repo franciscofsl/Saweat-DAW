@@ -1,15 +1,11 @@
 ﻿@page "/"
 @page "/home"
 @layout HomeLayout
-@inherits Saweat.Web.Public.Pages.HomeComponent
-
-@using Microsoft.Extensions.Configuration
-@using Radzen
-@using Radzen.Blazor
+@inherits HomeComponent
 <PageTitle>Home</PageTitle>
 <RadzenContent Container="main">
-  <ChildContent>
-      <RadzenHeading Size="H1" Text="Home"></RadzenHeading> 
-     
-  </ChildContent>
+    <ChildContent>
+        <RadzenHeading Size="H1" Text="Home"></RadzenHeading>
+
+    </ChildContent>
 </RadzenContent>

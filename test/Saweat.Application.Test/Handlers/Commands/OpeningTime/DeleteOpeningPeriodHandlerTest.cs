@@ -9,11 +9,14 @@ public class DeleteOpeningPeriodHandlerTest
         {
             Day = DayOfWeek.Tuesday,
             StartHour = new TimeSpan(17, 0, 0),
-            EndHour = new TimeSpan(17, 0, 5),
+            EndHour = new TimeSpan(17, 0, 5)
         };
         var unitOfWork = TestServices.GetMockUnitOfWork<OpeningPeriod>();
         var handler = new DeleteOpeningPeriodHandler(unitOfWork);
-        var response = await handler.Handle(new DeleteOpeningPeriodRequest { OpeningPeriod = openingPeriod }, default);
+        var response = await handler.Handle(new DeleteOpeningPeriodRequest
+        {
+            OpeningPeriod = openingPeriod
+        }, default);
         response.ValidationErrors.Should().BeEmpty();
     }
 }

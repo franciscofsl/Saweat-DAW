@@ -7,21 +7,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Contracts\Infrastructure\" />
-        <Folder Include="Contracts\Persistence\" />
-        <Folder Include="Handlers\Queries\OpeningPeriods\" />
+        <Folder Include="Contracts\Infrastructure\"/>
+        <Folder Include="Contracts\Persistence\"/>
+        <Folder Include="Handlers\Queries\OpeningPeriods\"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.0.1" />
-        <PackageReference Include="MediatR" Version="10.0.1" />
-        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.0.1"/>
+        <PackageReference Include="MediatR" Version="10.0.1"/>
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Saweat.Domain\Saweat.Domain.csproj" />
+        <ProjectReference Include="..\Saweat.Domain\Saweat.Domain.csproj"/>
     </ItemGroup>
 
 </Project>

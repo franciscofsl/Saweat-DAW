@@ -1,17 +1,14 @@
 ﻿@page "/"
 @page "/dashboard"
 @layout MainLayout
-@inherits Saweat.Web.Admin.Pages.DashboardComponent
-@attribute [Authorize]
 @using Microsoft.AspNetCore.Authorization
-@using Radzen
-@using Radzen.Blazor
-@using Saweat.Domain.Utils
 @using Saweat.Web.Admin.Shared.Widgets
+@inherits DashboardComponent
+@attribute [Authorize]
 
 <PageTitle>Dashboard</PageTitle>
 <RadzenHeading Size="H1" Text="Dashboard"></RadzenHeading>
-<BookingsWidgets />
+<BookingsWidgets/>
 
 @code
 {

@@ -1,14 +1,9 @@
 ﻿@page "/bookings"
 @inject IMediator Mediator
-@using Saweat.Application.Handlers.Queries.Bookings
-@using Saweat.Application.Handlers.Queries.Users
-@using Saweat.Domain.Entities
-@using MediatR
-@using Saweat.Domain.Enums
- 
+
 <RadzenHeading Size="H1" Text="Bookings"></RadzenHeading>
 
-<RadzenScheduler @ref=@scheduler style="height: 768px;"
+<RadzenScheduler @ref="@scheduler" style="height: 768px;"
                  SlotRender="@OnSlotRender"
                  TItem="Booking"
                  Data="@bookings"
@@ -17,9 +12,9 @@
                  TextProperty="CustomerName"
                  SelectedIndex="2"
                  AppointmentRender="@OnBookingRender">
-    <RadzenDayView />
-    <RadzenWeekView />
-    <RadzenMonthView />
+    <RadzenDayView/>
+    <RadzenWeekView/>
+    <RadzenMonthView/>
 </RadzenScheduler>
 
 
@@ -27,6 +22,7 @@
 
 
     private RadzenScheduler<Booking> scheduler;
+
     private IList<Booking> bookings;
 
 
@@ -41,24 +37,24 @@
         bookings = response.Data.ToList();
     }
 
-    private static  void OnSlotRender(SchedulerSlotRenderEventArgs args)
+    private static void OnSlotRender(SchedulerSlotRenderEventArgs args)
     {
-        // Highlight today in month view
+    // Highlight today in month view
         if (args.View.Text == "Month" && args.Start.Date == DateTime.Today)
         {
             args.Attributes["style"] = "background: rgba(255,220,40,.2);";
         }
 
-        //// Highlight working hours (9-18)
-        //    if ((args.View.Text == "Week" || args.View.Text == "Day") && args.Start.Hour > 8 && args.Start.Hour < 19)
-        //    {
-        //        args.Attributes["style"] = "background: rgba(255,220,40,.2);";
-        //    }
+    //// Highlight working hours (9-18)
+    //    if ((args.View.Text == "Week" || args.View.Text == "Day") && args.Start.Hour > 8 && args.Start.Hour < 19)
+    //    {
+    //        args.Attributes["style"] = "background: rgba(255,220,40,.2);";
+    //    }
     }
 
     private static void OnBookingRender(SchedulerAppointmentRenderEventArgs<Booking> args)
     {
-        // Never call StateHasChanged in AppointmentRender - would lead to infinite loop
+    // Never call StateHasChanged in AppointmentRender - would lead to infinite loop
 
 
         if (args.Data.State is BookingState.Pending)

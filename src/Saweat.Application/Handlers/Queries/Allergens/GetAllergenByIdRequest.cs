@@ -4,7 +4,7 @@ public class GetAllergenByIdRequest : IRequest<Response<Allergen>>
 {
     public GetAllergenByIdRequest(int allergenId)
     {
-        this.AllergenId = allergenId;
+        AllergenId = allergenId;
     }
 
     public int AllergenId { get; }

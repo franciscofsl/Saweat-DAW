@@ -6,7 +6,7 @@ public class DeleteAllergenHandler : IRequestHandler<DeleteAllergenRequest, Resp
 
     public DeleteAllergenHandler(IUnitOfWork unitOfWork)
     {
-        this._unitOfWork = unitOfWork;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Response<Allergen>> Handle(DeleteAllergenRequest request, CancellationToken cancellationToken)

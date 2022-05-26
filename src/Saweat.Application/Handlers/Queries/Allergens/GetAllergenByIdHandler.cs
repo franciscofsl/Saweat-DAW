@@ -6,7 +6,7 @@ public class GetAllergenByIdHandler : IRequestHandler<GetAllergenByIdRequest, Re
 
     public GetAllergenByIdHandler(IRepository<Allergen> repository)
     {
-        this._repository = repository;
+        _repository = repository;
     }
 
     public async Task<Response<Allergen>> Handle(GetAllergenByIdRequest request, CancellationToken cancellationToken)

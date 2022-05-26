@@ -1,13 +1,10 @@
-﻿@inherits Saweat.Web.Admin.Layouts.MainLayoutComponent
-
+﻿@using Radzen.Blazor
 @using Microsoft.AspNetCore.Components.Authorization
-@using Radzen
-@using Radzen.Blazor
-@using Saweat.Web.Admin.Pages
-<RadzenDialog />
-<RadzenNotification />
-<RadzenTooltip />
-<RadzenContextMenu />
+@inherits Saweat.Web.Admin.Layouts.MainLayoutComponent
+<RadzenDialog/>
+<RadzenNotification/>
+<RadzenTooltip/>
+<RadzenContextMenu/>
 
 <RadzenLayout>
     <ChildContent>
@@ -22,7 +19,7 @@
                                 <RadzenLabel Text="Saweat.Web.Admin"></RadzenLabel>
                             </div>
                             <div class="col-6 text-right">
-                                <AccessControl />
+                                <AccessControl/>
                             </div>
                         </div>
                     </ChildContent>
@@ -42,10 +39,10 @@
                     <ChildContent>
                         <RadzenPanelMenu style="height: 100%">
                             <RadzenPanelMenuItem Icon="dashboard" Text="Dashboard" Path="dashboard">
-                                </RadzenPanelMenuItem>
+                            </RadzenPanelMenuItem>
                             <RadzenPanelMenuItem Icon="import_contacts" Text="Reservas" Path="bookings">
                             </RadzenPanelMenuItem>
-                            
+
                             <RadzenPanelMenuItem Icon="settings" Text="Configuracion">
                                 <ChildContent>
                                     <RadzenPanelMenuItem Path="allergens" Text="Alergenos"/>

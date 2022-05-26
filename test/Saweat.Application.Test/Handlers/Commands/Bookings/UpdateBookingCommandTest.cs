@@ -12,27 +12,33 @@ public class UpdateBookingCommandTest
             CustomerEmail = "mail@mail.com",
             CustomerName = "Fran",
             CustomerPhone = "5476541"
-        }; 
+        };
         var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
         var repository = TestServices.GetMockRepository(Array.Empty<OpeningPeriod>());
         var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
-        var response = await handler.Handle(new UpdateBookingRequest{Booking = booking}, default);
+        var response = await handler.Handle(new UpdateBookingRequest
+        {
+            Booking = booking
+        }, default);
         response.ValidationErrors.Should().BeEmpty();
     }
 
     [Fact]
     public async Task Create_booking_return_error_with_empty_email()
-    { 
+    {
         var booking = new Booking
         {
             CustomerEmail = string.Empty,
             CustomerName = "Fran",
             CustomerPhone = "5476541"
-        }; 
+        };
         var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
         var repository = TestServices.GetMockRepository(Array.Empty<OpeningPeriod>());
         var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
-        var response = await handler.Handle(new UpdateBookingRequest { Booking = booking }, default); 
+        var response = await handler.Handle(new UpdateBookingRequest
+        {
+            Booking = booking
+        }, default);
         response.ValidationErrors.Should().HaveCount(1);
         response.ValidationErrors[0].Should().Be("El formato del email es incorrecto o esta vacio: ejemplo@ejemplo.com");
     }
@@ -45,11 +51,14 @@ public class UpdateBookingCommandTest
             CustomerEmail = "asdasd",
             CustomerName = "Fran",
             CustomerPhone = "5476541"
-        }; 
+        };
         var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
         var repository = TestServices.GetMockRepository(Array.Empty<OpeningPeriod>());
         var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
-        var response = await handler.Handle(new UpdateBookingRequest { Booking = booking }, default);
+        var response = await handler.Handle(new UpdateBookingRequest
+        {
+            Booking = booking
+        }, default);
         response.ValidationErrors.Should().HaveCount(1);
         response.ValidationErrors[0].Should().Be("El formato del email es incorrecto o esta vacio: ejemplo@ejemplo.com");
     }
@@ -65,7 +74,10 @@ public class UpdateBookingCommandTest
         var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
         var repository = TestServices.GetMockRepository(Array.Empty<OpeningPeriod>());
         var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
-        var response = await handler.Handle(new UpdateBookingRequest { Booking = booking }, default);
+        var response = await handler.Handle(new UpdateBookingRequest
+        {
+            Booking = booking
+        }, default);
         response.ValidationErrors.Should().HaveCount(1);
         response.ValidationErrors[0].Should().Be("El nombre es obligatorio.");
     }
@@ -82,14 +94,17 @@ public class UpdateBookingCommandTest
         var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
         var repository = TestServices.GetMockRepository(Array.Empty<OpeningPeriod>());
         var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
-        var response = await handler.Handle(new UpdateBookingRequest { Booking = booking }, default);
+        var response = await handler.Handle(new UpdateBookingRequest
+        {
+            Booking = booking
+        }, default);
         response.ValidationErrors.Should().HaveCount(1);
         response.ValidationErrors[0].Should().Be("El numero de telefono es obligatorio.");
     }
 
     [Fact]
     public async Task Update_existing_booking()
-    { 
+    {
         var booking = new Booking
         {
             CustomerEmail = "mail@mail.com",
@@ -99,15 +114,21 @@ public class UpdateBookingCommandTest
         var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
         var repository = TestServices.GetMockRepository(Array.Empty<OpeningPeriod>());
         var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
-        await handler.Handle(new UpdateBookingRequest { Booking = booking }, default);
+        await handler.Handle(new UpdateBookingRequest
+        {
+            Booking = booking
+        }, default);
         booking.BookingId = 1;
-        await handler.Handle(new UpdateBookingRequest { Booking = booking }, default);
+        await handler.Handle(new UpdateBookingRequest
+        {
+            Booking = booking
+        }, default);
     }
 
     [Fact]
     public async Task Create_booking_out_of_opening_period_return_error()
     {
-        var periods = new OpeningPeriod[]
+        var periods = new[]
         {
             new OpeningPeriod
             {
@@ -126,7 +147,10 @@ public class UpdateBookingCommandTest
         var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
         var repository = TestServices.GetMockRepository(periods);
         var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
-        var response = await handler.Handle(new UpdateBookingRequest { Booking = booking }, default);
+        var response = await handler.Handle(new UpdateBookingRequest
+        {
+            Booking = booking
+        }, default);
         response.ValidationErrors.Should().HaveCount(1);
         response.ValidationErrors[0].Should().Be("No se puede solicitar una reserva fuera del horario de apertura.");
     }

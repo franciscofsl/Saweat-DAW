@@ -13,28 +13,28 @@ public class TestServices
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public static TestServices GetInstance()
-    {
-        return new();
-    }
-
     private TestServices()
     {
         IServiceCollection collection = new ServiceCollection();
         collection.AddApplicationServices();
         collection.AddInfrastructureServices();
-        collection.AddPersistenceServices(() => string.Empty, true);
-        this._serviceProvider = collection.BuildServiceProvider();
+        collection.AddPersistenceServices(connectionString: () => string.Empty, true);
+        _serviceProvider = collection.BuildServiceProvider();
+    }
+
+    public static TestServices GetInstance()
+    {
+        return new TestServices();
     }
 
     public T GetService<T>() where T : class
     {
-        return this._serviceProvider.GetService<T>();
+        return _serviceProvider.GetService<T>();
     }
 
     public T GetServiceAsScope<T>() where T : class, IDisposable
     {
-        var scope = this._serviceProvider.CreateScope();
+        var scope = _serviceProvider.CreateScope();
         return scope.ServiceProvider.GetRequiredService<T>();
     }
 
@@ -43,11 +43,11 @@ public class TestServices
         var repositoryMock = new Mock<IRepository<TModel>>();
         repositoryMock.Setup(x =>
                 x.GetAllAsync(
-                    It.IsAny<Expression<Func<TModel, bool>>?>(),
-                    It.IsAny<Func<IQueryable<TModel>, IOrderedQueryable<TModel>>?>(),
-                    It.IsAny<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>?>(),
-                    It.IsAny<bool>(),
-                    It.IsAny<CancellationToken>()
+                It.IsAny<Expression<Func<TModel, bool>>?>(),
+                It.IsAny<Func<IQueryable<TModel>, IOrderedQueryable<TModel>>?>(),
+                It.IsAny<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>?>(),
+                It.IsAny<bool>(),
+                It.IsAny<CancellationToken>()
                 ))
             .Returns(Task.FromResult(returns.ToList()));
         return repositoryMock.Object;
@@ -55,11 +55,9 @@ public class TestServices
 
     public static IUnitOfWork GetMockUnitOfWork<TModel>(IRepository<TModel> repository = null) where TModel : class, new()
     {
-        repository = repository ?? GetMockRepository<TModel>(Array.Empty<TModel>());
+        repository = repository ?? GetMockRepository(Array.Empty<TModel>());
         var mock = new Mock<IUnitOfWork>();
         mock.Setup(x => x.GetRepository<TModel>()).Returns(repository);
         return mock.Object;
-    } 
-
-
+    }
 }

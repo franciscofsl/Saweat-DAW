@@ -1,19 +1,17 @@
 ﻿@page "/allergens/{AllergenId:int}"
 @using Saweat.Domain.Common
-@using Saweat.Application.Handlers.Commands.Allergens
 @using Saweat.Application.Handlers.Queries.Allergens
+@using Saweat.Application.Handlers.Commands.Allergens
 @inject NavigationManager navigationManager
 @inject IMediator Mediator
 
-<RadzenHeading Size="H1" Text="@_description" />
-  
+<RadzenHeading Size="H1" Text="@_description"/>
+
 <style>
-    form .row {
-        margin-bottom: 16px;
-    }
+    form .row { margin-bottom: 16px; }
 </style>
 
-<ErrorControl Errors="@_errors" />
+<ErrorControl Errors="@_errors"/>
 
 <RadzenTemplateForm TItem="Allergen" Data="@_allergen" Submit="@OnSubmit">
     <RadzenButton ButtonStyle="ButtonStyle.Success" ButtonType="ButtonType.Button" Text="Guardar" Click="@OnSubmit"/>
@@ -47,9 +45,13 @@
     </div>
 
 </RadzenTemplateForm>
+
 @code {
-    private Allergen _allergen = new();
+
+    private Allergen _allergen = new Allergen();
+
     private IEnumerable<string> _errors;
+
     private string _description;
 
     [Parameter]
@@ -64,7 +66,7 @@
             _allergen = response.Data;
             if (_allergen == null)
             {
-                _allergen = new();
+                _allergen = new Allergen();
             }
             else
             {
@@ -86,11 +88,15 @@
 
     private async Task<Response<Allergen>> SaveAllergen()
     {
-        return await Mediator.Send(new UpdateAllergenRequest{Allergen = _allergen});
+        return await Mediator.Send(new UpdateAllergenRequest
+        {
+            Allergen = _allergen
+        });
     }
 
     private async Task OnGoToAllergensSite()
     {
         navigationManager.NavigateTo("/allergens");
     }
+
 }

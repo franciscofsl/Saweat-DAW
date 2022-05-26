@@ -1,21 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using Radzen;
+namespace Saweat.Web.Admin.Services;
 
-namespace Saweat.Web.Admin.Services
+public class GlobalsService
 {
-    public partial class GlobalsService
-    {
+}
 
-    }
+public class PropertyChangedEventArgs
+{
+    public string Name { get; set; }
 
-    public class PropertyChangedEventArgs
-    {
-        public string Name { get; set; }
-        public object NewValue { get; set; }
-        public object OldValue { get; set; }
-        public bool IsGlobal { get; set; }
-    }
+    public object NewValue { get; set; }
+
+    public object OldValue { get; set; }
+
+    public bool IsGlobal { get; set; }
 }

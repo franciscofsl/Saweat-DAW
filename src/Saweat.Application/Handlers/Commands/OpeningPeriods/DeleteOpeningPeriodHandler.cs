@@ -2,18 +2,18 @@
 
 public class DeleteOpeningPeriodHandler : IRequestHandler<DeleteOpeningPeriodRequest, Response<OpeningPeriod>>
 {
-    private readonly IUnitOfWork _unitOfWork; 
+    private readonly IUnitOfWork _unitOfWork;
 
     public DeleteOpeningPeriodHandler(IUnitOfWork unitOfWork)
     {
-        this._unitOfWork = unitOfWork; 
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Response<OpeningPeriod>> Handle(DeleteOpeningPeriodRequest request, CancellationToken cancellationToken)
-    { 
-        var repository = this._unitOfWork.GetRepository<OpeningPeriod>();
+    {
+        var repository = _unitOfWork.GetRepository<OpeningPeriod>();
         await repository.DeleteAsync(request.OpeningPeriod, cancellationToken);
-        await this._unitOfWork.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         return Response<OpeningPeriod>.CreateResponse(request.OpeningPeriod);
     }
 }

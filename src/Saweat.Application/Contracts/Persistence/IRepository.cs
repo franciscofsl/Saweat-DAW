@@ -5,7 +5,6 @@ namespace Saweat.Application.Contracts.Persistence;
 
 public interface IRepository
 {
-
 }
 
 public interface IRepository<TModel> : IRepository where TModel : class

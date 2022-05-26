@@ -3,7 +3,7 @@
 namespace Saweat.Application.Test.Handlers.Commands.Allergens;
 
 public class DeleteAllergenHandlerTest
-{ 
+{
     [Fact]
     public async Task Update_valid_allergen()
     {
@@ -15,9 +15,12 @@ public class DeleteAllergenHandlerTest
             Icon = ""
         };
         var repository = TestServices.GetMockRepository(allergen);
-        var unitOfWork = TestServices.GetMockUnitOfWork<Allergen>(repository);
+        var unitOfWork = TestServices.GetMockUnitOfWork(repository);
         var handler = new DeleteAllergenHandler(unitOfWork);
-        var response = await handler.Handle(new DeleteAllergenRequest { Allergen = allergen }, default);
+        var response = await handler.Handle(new DeleteAllergenRequest
+        {
+            Allergen = allergen
+        }, default);
         response.ValidationErrors.Should().BeEmpty();
     }
 }

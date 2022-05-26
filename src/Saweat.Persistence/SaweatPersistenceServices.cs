@@ -9,11 +9,11 @@ public static class SaweatPersistenceServices
         services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
         if (inMemory)
-            return services.AddDbContext<SaweatDbContext>(options => options.UseInMemoryDatabase("SaweatInMemory"),
-                ServiceLifetime.Transient);
+            return services.AddDbContext<SaweatDbContext>(optionsAction: options => options.UseInMemoryDatabase("SaweatInMemory"),
+            ServiceLifetime.Transient);
 
         var connectionStringValue = connectionString.Invoke();
-        services.AddDbContext<SaweatDbContext>(options =>
+        services.AddDbContext<SaweatDbContext>(optionsAction: options =>
             options.UseSqlServer(connectionStringValue), ServiceLifetime.Transient);
 
         return services;

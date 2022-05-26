@@ -20,7 +20,7 @@ public class OpeningPeriodValidator : AbstractValidator<OpeningPeriod>
     {
         var periods = await _repository.GetAllAsync(filter: p => p.OpeningId != openingPeriod.OpeningId, token: token);
         return !periods.Any(p => p.Day == openingPeriod.Day &&
-                                openingPeriod.StartHour.Between(p.StartHour, p.EndHour)  &&
-                                openingPeriod.EndHour.Between(p.StartHour, p.EndHour));
+                                 openingPeriod.StartHour.Between(p.StartHour, p.EndHour) &&
+                                 openingPeriod.EndHour.Between(p.StartHour, p.EndHour));
     }
 }
