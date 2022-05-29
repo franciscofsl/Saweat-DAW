@@ -1,8 +1,7 @@
 ﻿namespace Saweat.Domain.Entities;
 
 public class Restaurant
-{
-
+{ 
     public string RestaurantId { get; set; }
 
     public string Description { get; set; }

@@ -1,10 +1,10 @@
 ﻿@using Radzen.Blazor
 @using Microsoft.AspNetCore.Components.Authorization
 @inherits Saweat.Web.Admin.Layouts.MainLayoutComponent
-<RadzenDialog/>
-<RadzenNotification/>
-<RadzenTooltip/>
-<RadzenContextMenu/>
+<RadzenDialog />
+<RadzenNotification />
+<RadzenTooltip />
+<RadzenContextMenu />
 
 <RadzenLayout>
     <ChildContent>
@@ -19,7 +19,7 @@
                                 <RadzenLabel Text="Saweat.Web.Admin"></RadzenLabel>
                             </div>
                             <div class="col-6 text-right">
-                                <AccessControl/>
+                                <AccessControl />
                             </div>
                         </div>
                     </ChildContent>
@@ -38,15 +38,11 @@
                 <RadzenSidebar @ref="sidebar0">
                     <ChildContent>
                         <RadzenPanelMenu style="height: 100%">
-                            <RadzenPanelMenuItem Icon="dashboard" Text="Dashboard" Path="dashboard">
-                            </RadzenPanelMenuItem>
-                            <RadzenPanelMenuItem Icon="import_contacts" Text="Reservas" Path="bookings">
-                            </RadzenPanelMenuItem>
-
+                            <RadzenPanelMenuItem Icon="dashboard" Text="Dashboard" Path="dashboard"/>
+                            <RadzenPanelMenuItem Icon="import_contacts" Text="Reservas" Path="bookings" />
                             <RadzenPanelMenuItem Icon="settings" Text="Configuracion">
-                                <ChildContent>
-                                    <RadzenPanelMenuItem Path="allergens" Text="Alergenos"/>
-                                </ChildContent>
+                                <RadzenPanelMenuItem Path="restaurant-profile" Text="Restaurante" />
+                                <RadzenPanelMenuItem Path="allergens" Text="Alergenos" />
                             </RadzenPanelMenuItem>
                         </RadzenPanelMenu>
                     </ChildContent>

@@ -1,0 +1,28 @@
+﻿@page "/restaurant-profile"
+@inject IMediator Mediator
+
+<RadzenHeading Size="H1" Text="Restaurante"></RadzenHeading>
+@if (_restaurant != null)
+{
+    <RadzenTabs TabPosition="TabPosition.Top" style=" display: flex;" RenderMode="TabRenderMode.Client">
+        <Tabs>
+            <RadzenTabsItem Text="Datos básicos">
+                <RestaurantBasicData Restaurant="@_restaurant" />
+            </RadzenTabsItem>
+        </Tabs>
+    </RadzenTabs>
+}
+@code {
+    private Restaurant _restaurant;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (_restaurant is null)
+        {
+            var response = await Mediator.Send(new GetRestaurantProfileRequest());
+            _restaurant = response.Data;
+        }
+    }
+
+
+}

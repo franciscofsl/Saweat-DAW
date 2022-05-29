@@ -1,0 +1,81 @@
+﻿@using Saweat.Application.Handlers.Commands.Restaurants
+@inject NavigationManager navigationManager
+@inject IMediator Mediator
+@inject NotificationService NotificationService
+
+<style>
+    form .row {
+        margin-top: 16px;
+    }
+</style>
+
+<ErrorControl Errors="@_errors" />
+
+<RadzenTemplateForm TItem="Restaurant" Data="@Restaurant" Submit="@OnSubmit">
+    <RadzenButton ButtonStyle="ButtonStyle.Success" ButtonType="ButtonType.Button" Text="Guardar" Click="@OnSubmit" />
+    <RadzenButton ButtonType="ButtonType.Button" Text="Cancelar" Click="@OnCancel" />
+    
+    
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">   
+            <RadzenLabel Text="Imagen" />
+        </div>
+        <div class="col-md-8">
+            <RadzenNumeric Placeholder="300" style="width: 100%;" Name="Amount" @bind-Value="@Restaurant.Description" />
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">   
+            <RadzenLabel Text="Nombre" />
+        </div>
+        <div class="col-md-8">
+            <RadzenFileInput @bind-Value="@Restaurant.Photo" TValue="string" Class="w-100"  />
+        </div>
+    </div>  
+    <div class="row">
+
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Descripcion"/>
+        </div>
+        <div class="col-md-8">
+            <RadzenTextArea style="width: 100%;" Name="Description" @bind-value="@Restaurant.LongDescription"/>
+        </div>
+    </div>
+
+</RadzenTemplateForm>
+@code {
+    private IEnumerable<string> _errors;
+
+    [Parameter]
+    public Restaurant Restaurant { get; set; }
+
+    private async Task OnSubmit()
+    {
+        var response = await Mediator.Send(new UpdateRestaurantBasicDataRequest { Restaurant = Restaurant });
+        if (response.ValidationErrors.Any())
+        {
+            _errors = response.ValidationErrors;
+            return;
+        }
+        ShowSuccessUpdate();
+    }
+
+    private async Task OnCancel()
+    {
+        var response = await Mediator.Send(new GetRestaurantProfileRequest());
+        Restaurant = response.Data;
+        navigationManager.NavigateTo("/restaurant-profile");
+    }
+
+    private void ShowSuccessUpdate()
+    {
+        var notification = new NotificationMessage
+        {
+            Severity = NotificationSeverity.Success,
+            Detail = "Se han guardado los cambios",
+            Duration = 4000
+        };
+        NotificationService.Notify(notification); 
+    }
+
+}
