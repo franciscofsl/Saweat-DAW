@@ -16,7 +16,7 @@
                         <div class="row justify-content-start align-items-center">
                             <div class="col-6 d-flex align-items-center">
                                 <RadzenSidebarToggle Click="@SidebarToggle0Click"></RadzenSidebarToggle>
-                                <RadzenLabel Text="Saweat.Web.Admin"></RadzenLabel>
+                                <RadzenImage Path="assets/images/Saweat-logo-1.png" Style="max-height:55px; padding: 6px;"/>
                             </div>
                             <div class="col-6 text-right">
                                 <AccessControl />
@@ -39,7 +39,8 @@
                     <ChildContent>
                         <RadzenPanelMenu style="height: 100%">
                             <RadzenPanelMenuItem Icon="dashboard" Text="Dashboard" Path="dashboard"/>
-                            <RadzenPanelMenuItem Icon="import_contacts" Text="Reservas" Path="bookings" />
+                            <RadzenPanelMenuItem Icon="today" Text="Reservas" Path="bookings" />
+                            <RadzenPanelMenuItem Icon="message" Text="Noticias" Path="news" />
                             <RadzenPanelMenuItem Icon="settings" Text="Configuracion">
                                 <RadzenPanelMenuItem Path="restaurant-profile" Text="Restaurante" />
                                 <RadzenPanelMenuItem Path="allergens" Text="Alergenos" />

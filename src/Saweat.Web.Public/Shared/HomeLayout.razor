@@ -1,9 +1,9 @@
 ﻿@using Radzen.Blazor
 @inherits Saweat.Web.Public.Layouts.HomeLayoutComponent
-<RadzenDialog/>
-<RadzenNotification/>
-<RadzenTooltip/>
-<RadzenContextMenu/>
+<RadzenDialog />
+<RadzenNotification />
+<RadzenTooltip />
+<RadzenContextMenu />
 
 <RadzenLayout>
     <ChildContent>
@@ -13,21 +13,22 @@
                     <div class="col-md-6 d-flex align-items-center" style="padding-left: 30px">
                         @if (Restaurant != null)
                         {
-                            <RadzenImage  style="max-height: 110px;"  Path="@Restaurant.Photo"/>
+                            <RadzenImage style="max-height:100px; padding: 6px;" Path="@Restaurant.Photo"/>
                         }
                     </div>
                     <div class="col-md-6 text-lg-right">
                         <RadzenMenu style=@("height: 50px; flex: auto")>
                             <ChildContent>
-                                <RadzenMenuItem Text="Home" Path="home" />
-                                
+                                <RadzenMenuItem Text="Home" Path="home" Icon="home" />
+                                <RadzenMenuItem Text="Noticias" Path="news" Icon="message" />
+
                             </ChildContent>
                         </RadzenMenu>
                     </div>
                 </div>
             </ChildContent>
         </RadzenHeader>
-        <RadzenBody @ref="body0" style="margin-left: 0px; margin-top: 58px">
+        <RadzenBody @ref="body0" style="margin-left: 0px; margin-left: 15%; margin-right: 15%;">
             <ChildContent>
                 <RadzenContentContainer Name="main">
                     @Body

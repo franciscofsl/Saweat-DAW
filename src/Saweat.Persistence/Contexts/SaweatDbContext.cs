@@ -16,11 +16,14 @@ public partial class SaweatDbContext : DbContext
     public virtual DbSet<Booking> Bookings { get; set; }
     public virtual DbSet<OpeningPeriod> OpeningPeriods { get; set; }
     public virtual DbSet<Allergen> Allergens { get; set; }
+    public virtual DbSet<New> News { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
+        {
             optionsBuilder.UseSqlServer("Data Source=PCFRAN;Initial Catalog=saweat;Integrated Security=True");
+        }
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,7 +32,7 @@ public partial class SaweatDbContext : DbContext
         modelBuilder.ApplyConfiguration(new RestaurantConfiguration());
         modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
 
-        OnModelCreatingPartial(modelBuilder);
+        this.OnModelCreatingPartial(modelBuilder);
     }
 
     public void Migrate()
@@ -38,7 +41,7 @@ public partial class SaweatDbContext : DbContext
         {
             this.Database.Migrate();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
     }

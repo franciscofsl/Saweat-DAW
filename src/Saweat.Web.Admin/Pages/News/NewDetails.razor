@@ -1,0 +1,129 @@
+﻿@page "/news/{NewId:int}"
+@using Saweat.Domain.Common
+@using Saweat.Application.Handlers.Queries.News
+@using Saweat.Application.Handlers.Commands.News
+@inject NavigationManager navigationManager
+@inject IMediator Mediator
+
+<RadzenHeading Size="H1" Text="Noticias" />
+
+<style>
+    form .row {
+        margin-bottom: 16px;
+    }
+</style>
+
+<ErrorControl Errors="@_errors" />
+
+<RadzenTemplateForm TItem="New" Data="@_new" Submit="@OnSubmit">
+    <RadzenButton ButtonStyle="ButtonStyle.Success" ButtonType="ButtonType.Button" Text="Guardar" Click="@OnSubmit" />
+    <RadzenButton ButtonType="ButtonType.Button" Text="Cancelar" Click="@OnGoToNewsSite" />
+    <p />
+    <div class="row">
+        <div class="col-md-1 align-items-center d-flex">
+            <RadzenLabel Text="Título" />
+        </div>
+        <div class="col-md-9">
+            <RadzenTextBox Style="width: 100%;" Name="Title" @bind-Value="@_new.Title" />
+        </div>
+        <div class="col-md-1 align-items-center d-flex">
+            <RadzenLabel Text="Visible" />
+        </div>
+        <div class="col-md-1">
+            <RadzenCheckBox @bind-Value="@_new.Visible" Name="Visible" TValue="bool" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">   
+            <RadzenLabel Text="Imagen" />
+        </div>
+        <div class="col-md-8">
+            <RadzenFileInput @bind-Value="@_new.Photo" TValue="string" Class="w-100"  />
+        </div>
+    </div>  
+    <div class="row">
+        <div class="col-md-2 align-items-center d-flex ">
+            <RadzenLabel Text="Fecha Publicación" />
+        </div>
+        <div class="col-md-2">
+            <RadzenDatePicker @bind-Value="@_new.PublishedDate" DateFormat="d" />
+        </div>
+
+        <div class="col-md-2 align-items-center d-flex ">
+            <RadzenLabel Text="Fecha Creación" />
+        </div>
+        <div class="col-md-2">
+            <RadzenDatePicker @bind-Value="@_new.CreatedDate" DateFormat="d" ReadOnly="true" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 align-items-center d-flex">
+            <RadzenLabel Text="Contenido" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <RadzenHtmlEditor @bind-Value="@_new.Content" style="min-height: 500px;">
+                <RadzenHtmlEditorUndo />
+                <RadzenHtmlEditorRedo />
+                <RadzenHtmlEditorSeparator />
+                <RadzenHtmlEditorBold />
+                <RadzenHtmlEditorItalic />
+                <RadzenHtmlEditorUnderline />
+                <RadzenHtmlEditorStrikeThrough />
+                <RadzenHtmlEditorSeparator />
+                <RadzenHtmlEditorColor />
+                <RadzenHtmlEditorBackground />
+                <RadzenHtmlEditorRemoveFormat />
+            </RadzenHtmlEditor>
+        </div>
+    </div>
+
+</RadzenTemplateForm>
+
+@code {
+
+    private New _new = new New();
+    private IEnumerable<string> _errors;
+
+    [Parameter]
+    public int NewId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (NewId > 0)
+        {
+            var response = await Mediator.Send(new GetNewByIdRequest { NewId = NewId });
+            _new = response.Data ?? new New();
+            return;
+        }
+        _new.CreatedDate = DateTime.Now;
+        _new.PublishedDate = DateTime.Now;
+    }
+
+    private async Task OnSubmit()
+    {
+        var response = await SaveNew();
+        if (response.ValidationErrors.Any())
+        {
+            _errors = response.ValidationErrors;
+            return;
+        }
+        await OnGoToNewsSite();
+    }
+
+    private async Task<Response<New>> SaveNew()
+    {
+        return await Mediator.Send(new UpdateNewRequest
+            {
+                New = _new
+            });
+    }
+
+    private async Task OnGoToNewsSite()
+    {
+        navigationManager.NavigateTo("/news");
+    }
+
+}

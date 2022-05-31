@@ -1,0 +1,25 @@
+﻿@page "/news/{NewId:int}"
+@using System.Web
+@layout HomeLayout
+@inject IMediator Mediator
+ 
+<RadzenHeading Size="H1" Text="@currentNew.Title"/> 
+<RadzenImage Path="@currentNew.Photo" Class="rounded float-left mr-3" Style="max-width: 100%;"/>
+@((MarkupString)@currentNew.Content)
+
+@code {
+    [Parameter]
+    public int NewId { get; set; }
+
+    private New currentNew { get; set; } = new New();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (currentNew.NewId <= 0)
+        {
+            var response = await Mediator.Send(new GetNewByIdRequest { NewId = NewId });
+            currentNew = response.Data;
+        }
+    }
+
+}

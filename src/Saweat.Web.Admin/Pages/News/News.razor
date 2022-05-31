@@ -1,0 +1,79 @@
+﻿@page "/news"
+@using Saweat.Application.Handlers.Commands.News
+@using Saweat.Application.Handlers.Queries.Allergens
+@using Saweat.Application.Handlers.Commands.Allergens
+@using Saweat.Application.Handlers.Queries.News
+@inject NavigationManager navigationManager
+@inject IMediator Mediator
+
+<RadzenHeading Size="H1" Text="Noticias"></RadzenHeading>
+
+<RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" Text="Añadir" Click="@NewNew"/>
+<RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="create" Text="Modificar" Click="@ModifyNew"/>
+<RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete_outline" Text="Eliminar" Click="@RemoveNew"/>
+<p/>
+<RadzenDataGrid AllowFiltering="true"
+                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                AllowPaging="true" PageSize="15"
+                AllowSorting="true"
+                Data="@_news"
+                TItem="New"
+                AllowColumnResize="true"
+                SelectionMode="DataGridSelectionMode.Single"
+                @bind-Value="@_selectedNews"
+                EmptyText="No hay noticias">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="New" Property="NewId" Title="Id"/>
+        <RadzenDataGridColumn TItem="New" Property="Title" Title="Titulo"/>
+        <RadzenDataGridColumn TItem="New" Property="CreatedDate" Title="F. Creación"/>
+        <RadzenDataGridColumn TItem="New" Property="PublishedDate" Title="F. Publicación"/>
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+
+    private List<New> _news;
+
+    private IList<New> _selectedNews;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshNews();
+    }
+
+    private async Task RefreshNews()
+    {
+        var response = await Mediator.Send(new GetAllNewsRequest());
+        _news = response.Data.ToList();
+    }
+
+    public void NewNew()
+    {
+        navigationManager.NavigateTo("/news/0");
+    }
+
+    public void ModifyNew()
+    {
+        if (_selectedNews is null || _selectedNews.Any() == false)
+        {
+            return;
+        }
+        var selectedAllergen = _selectedNews.FirstOrDefault();
+        navigationManager.NavigateTo($"/news/{selectedAllergen.NewId}");
+    }
+
+    public async Task RemoveNew()
+    {
+        if (_selectedNews is null || _selectedNews.Any() == false)
+        {
+            return;
+        }
+        var selectedNew = _selectedNews.FirstOrDefault();
+        await Mediator.Send(new RemoveNewRequest
+        {
+            New = selectedNew
+        });
+        await RefreshNews();
+    }
+}

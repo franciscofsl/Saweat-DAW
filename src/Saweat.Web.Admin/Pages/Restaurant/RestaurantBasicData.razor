@@ -14,19 +14,17 @@
 <RadzenTemplateForm TItem="Restaurant" Data="@Restaurant" Submit="@OnSubmit">
     <RadzenButton ButtonStyle="ButtonStyle.Success" ButtonType="ButtonType.Button" Text="Guardar" Click="@OnSubmit" />
     <RadzenButton ButtonType="ButtonType.Button" Text="Cancelar" Click="@OnCancel" />
-    
-    
     <div class="row">
         <div class="col-md-4 align-items-center d-flex">   
-            <RadzenLabel Text="Imagen" />
+            <RadzenLabel Text="Nombre" />
         </div>
         <div class="col-md-8">
-            <RadzenNumeric Placeholder="300" style="width: 100%;" Name="Amount" @bind-Value="@Restaurant.Description" />
+            <RadzenTextBox style="width: 100%;" Name="Amount" @bind-Value="@Restaurant.Description" />
         </div>
     </div> 
     <div class="row">
         <div class="col-md-4 align-items-center d-flex">   
-            <RadzenLabel Text="Nombre" />
+            <RadzenLabel Text="Imagen" />
         </div>
         <div class="col-md-8">
             <RadzenFileInput @bind-Value="@Restaurant.Photo" TValue="string" Class="w-100"  />

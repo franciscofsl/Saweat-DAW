@@ -1,0 +1,50 @@
+﻿@page "/news"
+@layout HomeLayout
+@inject IMediator Mediator
+@inject NavigationManager navigationManager
+
+<RadzenHeading Size="H1" Text="Últimas Noticias"></RadzenHeading>
+<RadzenDataList WrapItems="true" AllowPaging="true" Data="@_news" TItem="New" PageSize="50">
+    <Template Context="selectedNew">
+        <RadzenCard Style="width: 200px;">
+            <div class="d-flex flex-row align-items-center">
+                <RadzenImage Path="@selectedNew.Photo" Class="rounded-circle float-left mr-3" Style="width: 80px; height: 80px;" />
+                <div>
+                    <RadzenLink href="javascript:void(0)"
+                                Text="Restablecer filtros"
+                                @onclick="@(args => OpenNewDetail(args, selectedNew.NewId))" />
+
+                    <div style="font-size: .8em">@(selectedNew.PublishedDate.ToShortDateString())</div>
+                    <div>@(GetContentText(selectedNew))</div>
+                </div>
+            </div>
+        </RadzenCard>
+    </Template>
+</RadzenDataList>
+
+@code {
+
+    private IList<New> _news = new List<New>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (_news is null || _news.Any() == false)
+        {
+            var response = await Mediator.Send(new GetVisibleNewsRequest());
+            _news = response.Data.ToList();
+        }
+    }
+
+    private string GetContentText(New currentNew)
+    {
+        var value = Regex.Replace(currentNew.Content, "<.*?>", string.Empty);
+        return value.Length > 120
+            ? $"{value.Substring(0, 119)}..."
+            : value;
+    }
+
+    internal async void OpenNewDetail(object args, int newId)
+    {
+        navigationManager.NavigateTo($"/news/{newId}");
+    }
+}

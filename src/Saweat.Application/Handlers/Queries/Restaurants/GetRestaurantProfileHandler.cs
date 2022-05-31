@@ -6,12 +6,12 @@ public class GetRestaurantProfileHandler : IRequestHandler<GetRestaurantProfileR
 
     public GetRestaurantProfileHandler(IRepository<Restaurant> repository)
     {
-        this._repository = repository;
+        _repository = repository;
     }
 
     public async Task<Response<Restaurant>> Handle(GetRestaurantProfileRequest request, CancellationToken cancellationToken)
     {
-        var elements = await this._repository.GetAllAsync(token: cancellationToken);
+        var elements = await _repository.GetAllAsync(token: cancellationToken);
         return Response<Restaurant>.CreateResponse(elements.FirstOrDefault());
     }
 }
