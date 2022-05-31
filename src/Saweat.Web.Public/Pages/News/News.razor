@@ -11,7 +11,7 @@
                 <RadzenImage Path="@selectedNew.Photo" Class="rounded-circle float-left mr-3" Style="width: 80px; height: 80px;" />
                 <div>
                     <RadzenLink href="javascript:void(0)"
-                                Text="Restablecer filtros"
+                                Text="@selectedNew.Title"
                                 @onclick="@(args => OpenNewDetail(args, selectedNew.NewId))" />
 
                     <div style="font-size: .8em">@(selectedNew.PublishedDate.ToShortDateString())</div>
