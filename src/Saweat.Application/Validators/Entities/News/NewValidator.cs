@@ -2,8 +2,7 @@
 
 public class NewValidator : AbstractValidator<New>
 {
-
-    public NewValidator(IRepository<OpeningPeriod> repository)
+    public NewValidator()
     {
         RuleFor(n => n.Title)
             .NotEmpty()
@@ -13,13 +12,8 @@ public class NewValidator : AbstractValidator<New>
             .NotEmpty()
             .WithMessage("La noticia no tiene contenido.");
 
-        RuleFor(n => n.PublishedDate)
-            .NotNull()
-            .WithMessage("La noticia no tiene fecha de publicación.");
-
         RuleFor(n => n.Photo)
             .NotEmpty()
             .WithMessage("No se ha incluido una imagen.");
-
     }
 }

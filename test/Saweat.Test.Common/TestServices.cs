@@ -43,13 +43,27 @@ public class TestServices
         var repositoryMock = new Mock<IRepository<TModel>>();
         repositoryMock.Setup(x =>
                 x.GetAllAsync(
-                It.IsAny<Expression<Func<TModel, bool>>?>(),
-                It.IsAny<Func<IQueryable<TModel>, IOrderedQueryable<TModel>>?>(),
-                It.IsAny<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>?>(),
-                It.IsAny<bool>(),
-                It.IsAny<CancellationToken>()
+                    It.IsAny<Expression<Func<TModel, bool>>?>(),
+                    It.IsAny<Func<IQueryable<TModel>, IOrderedQueryable<TModel>>?>(),
+                    It.IsAny<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>?>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()
                 ))
             .Returns(Task.FromResult(returns.ToList()));
+        return repositoryMock.Object;
+    }
+
+    public static IRepository<TModel> GetMockRepositoryById<TModel>(TModel entity) where TModel : class
+    {
+        var repositoryMock = new Mock<IRepository<TModel>>();
+        repositoryMock.Setup(x =>
+                x.GetByIdAsync(
+                    It.IsAny<object>(),
+                    It.IsAny<Func<IQueryable<TModel>, IIncludableQueryable<TModel, object>>?>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()
+                ))
+            .Returns(Task.FromResult(entity));
         return repositoryMock.Object;
     }
 

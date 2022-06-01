@@ -109,16 +109,12 @@ public class UpdateBookingCommandTest
         {
             CustomerEmail = "mail@mail.com",
             CustomerName = "Fran",
-            CustomerPhone = "5476541"
+            CustomerPhone = "5476541",
+            BookingId = 1
         };
         var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
         var repository = TestServices.GetMockRepository(Array.Empty<OpeningPeriod>());
         var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
-        await handler.Handle(new UpdateBookingRequest
-        {
-            Booking = booking
-        }, default);
-        booking.BookingId = 1;
         await handler.Handle(new UpdateBookingRequest
         {
             Booking = booking

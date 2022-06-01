@@ -70,7 +70,7 @@
             return;
         }
         var selectedNew = _selectedNews.FirstOrDefault();
-        await Mediator.Send(new RemoveNewRequest
+        await Mediator.Send(new DeleteNewRequest
         {
             New = selectedNew
         });
