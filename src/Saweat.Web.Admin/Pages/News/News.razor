@@ -1,7 +1,5 @@
 ﻿@page "/news"
 @using Saweat.Application.Handlers.Commands.News
-@using Saweat.Application.Handlers.Queries.Allergens
-@using Saweat.Application.Handlers.Commands.Allergens
 @using Saweat.Application.Handlers.Queries.News
 @inject NavigationManager navigationManager
 @inject IMediator Mediator
@@ -28,6 +26,11 @@
         <RadzenDataGridColumn TItem="New" Property="Title" Title="Titulo"/>
         <RadzenDataGridColumn TItem="New" Property="CreatedDate" Title="F. Creación"/>
         <RadzenDataGridColumn TItem="New" Property="PublishedDate" Title="F. Publicación"/>
+        <RadzenDataGridColumn TItem="New" Property="Visible" Title="Visible">
+            <Template Context="data">
+                @(@data.Visible ? "Si" : "No")
+            </Template>
+        </RadzenDataGridColumn>
     </Columns>
 </RadzenDataGrid>
 

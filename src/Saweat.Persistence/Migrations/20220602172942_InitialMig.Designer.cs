@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Saweat.Persistence.Contexts;
 
@@ -11,9 +12,10 @@ using Saweat.Persistence.Contexts;
 namespace Saweat.Persistence.Migrations
 {
     [DbContext(typeof(SaweatDbContext))]
-    partial class SaweatDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220602172942_InitialMig")]
+    partial class InitialMig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,6 +124,9 @@ namespace Saweat.Persistence.Migrations
                         .HasColumnType("nchar(30)")
                         .IsFixedLength();
 
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
                     b.Property<string>("Photo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -134,9 +139,49 @@ namespace Saweat.Persistence.Migrations
 
                     b.HasKey("PlateFoodId");
 
+                    b.HasIndex("Order");
+
                     b.HasIndex("Type");
 
                     b.ToTable("FoodPlates");
+                });
+
+            modelBuilder.Entity("Saweat.Domain.Entities.FoodPlateOrder", b =>
+                {
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nchar(200)")
+                        .IsFixedLength();
+
+                    b.HasKey("Order");
+
+                    b.ToTable("FoodPlateOrders");
+
+                    b.HasData(
+                        new
+                        {
+                            Order = 0,
+                            Description = "Indefinido"
+                        },
+                        new
+                        {
+                            Order = 1,
+                            Description = "Primero"
+                        },
+                        new
+                        {
+                            Order = 2,
+                            Description = "Segundo"
+                        },
+                        new
+                        {
+                            Order = 3,
+                            Description = "Tercero / Postre"
+                        });
                 });
 
             modelBuilder.Entity("Saweat.Domain.Entities.FoodPlateType", b =>
@@ -400,12 +445,24 @@ namespace Saweat.Persistence.Migrations
 
             modelBuilder.Entity("Saweat.Domain.Entities.FoodPlate", b =>
                 {
+                    b.HasOne("Saweat.Domain.Entities.FoodPlateOrder", "FoodPlateOrder")
+                        .WithMany("FoodPlates")
+                        .HasForeignKey("Order")
+                        .IsRequired();
+
                     b.HasOne("Saweat.Domain.Entities.FoodPlateType", "FoodPlateType")
                         .WithMany("FoodPlates")
                         .HasForeignKey("Type")
                         .IsRequired();
 
+                    b.Navigation("FoodPlateOrder");
+
                     b.Navigation("FoodPlateType");
+                });
+
+            modelBuilder.Entity("Saweat.Domain.Entities.FoodPlateOrder", b =>
+                {
+                    b.Navigation("FoodPlates");
                 });
 
             modelBuilder.Entity("Saweat.Domain.Entities.FoodPlateType", b =>

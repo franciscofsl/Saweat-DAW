@@ -34,11 +34,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4 align-items-center d-flex">   
+        <div class="col-md-1 align-items-center d-flex">   
             <RadzenLabel Text="Imagen" />
         </div>
         <div class="col-md-8">
-            <RadzenFileInput @bind-Value="@_new.Photo" TValue="string" Class="w-100"  />
+            <RadzenFileInput @bind-Value="@_new.Photo" TValue="string" Class="w-100" />
         </div>
     </div>  
     <div class="row">
@@ -64,7 +64,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <RadzenHtmlEditor @bind-Value="@_new.Content" style="min-height: 500px;">
+            <RadzenHtmlEditor @bind-Value="@_new.Content" style="min-height: 400px;">
                 <RadzenHtmlEditorUndo />
                 <RadzenHtmlEditorRedo />
                 <RadzenHtmlEditorSeparator />

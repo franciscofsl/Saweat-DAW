@@ -1,0 +1,62 @@
+﻿@page "/food-plates"
+@layout HomeLayout
+@using Saweat.Application.Handlers.Queries.FoodPlates
+@using Saweat.Domain.Utils
+@inject IMediator mediator
+@inject IJSRuntime runtime
+
+<div style="width: fit-content; min-width: 200px;" Class="mt-3 mx-auto">
+    <RadzenMenu>
+        <RadzenMenuItem Text="Recomendados" Click="args => Go(args, 1)" Icon="account_circle" />
+        <RadzenMenuItem Text="Carnes" Click="args => Go(args, 2)" Icon="account_circle" />
+        <RadzenMenuItem Text="Vegetales" Click="args => Go(args, 3)" Icon="account_circle" />
+        <RadzenMenuItem Text="Mixtos" Click="args => Go(args, 4)" Icon="account_circle" />
+        <RadzenMenuItem Text="Postres" Click="args => Go(args, 5)" Icon="account_circle" />
+        <RadzenMenuItem Text="Bebidas" Click="args => Go(args, 6)" Icon="account_circle" />
+        <RadzenMenuItem Text="Bebidas Alcoholicas" Click="args => Go(args, 7)" Icon="account_circle" />
+    </RadzenMenu>
+</div>
+
+@if (load)
+{
+    <FoodPlatesSection Id="1" Source="_foodPlatesByType.SpecialFoodPlates" Title="Recomendados" />
+    <FoodPlatesSection Id="2" Source="_foodPlatesByType.MeatFoodPlates" Title="Carnes" />
+    <FoodPlatesSection Id="3" Source="_foodPlatesByType.VegetableFoodPlates" Title="Vegetales" />
+    <FoodPlatesSection Id="4" Source="_foodPlatesByType.MixedFoodPlates" Title="Mixtos" />
+    <FoodPlatesSection Id="5" Source="_foodPlatesByType.DessertFoodPlates" Title="Postres" />
+    <FoodPlatesSection Id="6" Source="_foodPlatesByType.DrinkFoodPlates" Title="Bebidas" />
+    <FoodPlatesSection Id="7" Source="_foodPlatesByType.AlcoholicDrinkFoodPlates" Title="Bebidas Alcoholicas" />
+}
+
+@code {
+    private FoodPlatesByType _foodPlatesByType = new();
+    private bool load = false;
+
+    private FoodPlatesSection SpecialFoodPlates;
+    private FoodPlatesSection MeatFoodPlates;
+    private FoodPlatesSection VegetableFoodPlates;
+    private FoodPlatesSection MixedFoodPlates;
+    private FoodPlatesSection DessertFoodPlates;
+    private FoodPlatesSection DrinkFoodPlates;
+    private FoodPlatesSection AlcoholicDrinkFoodPlates;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!load)
+        {
+            var response = await mediator.Send(new GetFoodPlatesByTypeRequest());
+            _foodPlatesByType = response.Data;
+            load = true;
+        }
+    }
+
+    private async void Go(object args, int id)
+    {
+        await ScrollToElementId(new object[] { id });
+    }
+
+    private async Task<bool> ScrollToElementId(object[] elementId)
+    {
+        return await runtime.InvokeAsync<bool>("scrollToElementId", elementId);
+    }
+}

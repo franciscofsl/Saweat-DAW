@@ -1,0 +1,89 @@
+﻿@page "/food-plates"
+@using Saweat.Application.Handlers.Commands.FoodPlates
+@using Saweat.Application.Handlers.Queries.FoodPlates 
+@inject NavigationManager navigationManager
+@inject IMediator mediator
+
+<RadzenHeading Size="H1" Text="Platos / Productos" />
+
+<RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" Text="Añadir" Click="@NewFoodPlate"/>
+<RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="create" Text="Modificar" Click="@ModifyFoodPlate"/>
+<RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete_outline" Text="Eliminar" Click="@RemoveFoodPlate"/>
+<p/>
+<RadzenDataGrid AllowVirtualization="true"
+                GroupPanelText="Arrastre para agrupar por Orden o Tipo"
+                AllowGrouping="true"
+                AllowFiltering="true"
+                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                AllowPaging="true" PageSize="10"
+                AllowSorting="true"
+                Data="@_foodPlates"
+                TItem="FoodPlate"
+                AllowColumnResize="true"
+                SelectionMode="DataGridSelectionMode.Single"
+                @bind-Value="@_selectedFoodPlates"
+                EmptyText="No hay platos / productos">
+    <Columns> 
+        <RadzenDataGridColumn TItem="FoodPlate" Title="Imagen" Filterable="false" Width="60px"  Groupable="false">
+            <Template Context="data">
+                <RadzenImage Path="@data.Photo" style="width: 40px; height: 40px; border-radius: 8px;" />
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="FoodPlate" Property="PlateFoodId" Title="Id" Groupable="false"/>
+        <RadzenDataGridColumn TItem="FoodPlate" Property="Name" Title="Nombre" Groupable="false" />
+        <RadzenDataGridColumn TItem="FoodPlate" Property="Description" Title="Descripcion" Groupable="false"/>
+        <RadzenDataGridColumn TItem="FoodPlate" Property="Price" Title="Precio (€)" Groupable="false"/> 
+        <RadzenDataGridColumn TItem="FoodPlate" Property="FoodPlateType" Title="Tipo" Groupable="true" >
+            <Template Context="data">
+                @data.FoodPlateType?.Description
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+
+    private List<FoodPlate> _foodPlates;
+
+    private IList<FoodPlate> _selectedFoodPlates;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshFoodPlates();
+    }
+
+    private async Task RefreshFoodPlates()
+    {
+        var response = await mediator.Send(new GetAllFoodPlatesRequest());
+        _foodPlates = response.Data.ToList();
+    }
+
+    public void NewFoodPlate()
+    {
+        navigationManager.NavigateTo("/food-plates/0");
+    }
+
+    public void ModifyFoodPlate()
+    {
+        if (_selectedFoodPlates is null || _selectedFoodPlates.Any() == false)
+        {
+            return;
+        }
+        var selectedFoodPlate = _selectedFoodPlates.FirstOrDefault();
+        navigationManager.NavigateTo($"/food-plates/{selectedFoodPlate.PlateFoodId}");
+    }
+
+    public async Task RemoveFoodPlate()
+    {
+        if (_selectedFoodPlates is null || _selectedFoodPlates.Any() == false)
+        {
+            return;
+        }
+        var selectedFoodPlate = _selectedFoodPlates.FirstOrDefault();
+        await mediator.Send(new DeleteFoodPlateRequest()
+        {
+            FoodPlate = selectedFoodPlate
+        });
+        await RefreshFoodPlates();
+    }
+}

@@ -12,8 +12,8 @@ using Saweat.Persistence.Contexts;
 namespace Saweat.Persistence.Migrations
 {
     [DbContext(typeof(SaweatDbContext))]
-    [Migration("20220531155651_ChangeSeedImage")]
-    partial class ChangeSeedImage
+    [Migration("20220604082106_RemoveOrderType")]
+    partial class RemoveOrderType
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -102,6 +102,101 @@ namespace Saweat.Persistence.Migrations
                     b.HasKey("BookingId");
 
                     b.ToTable("Bookings");
+                });
+
+            modelBuilder.Entity("Saweat.Domain.Entities.FoodPlate", b =>
+                {
+                    b.Property<int>("PlateFoodId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlateFoodId"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nchar(200)")
+                        .IsFixedLength();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nchar(30)")
+                        .IsFixedLength();
+
+                    b.Property<string>("Photo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("PlateFoodId");
+
+                    b.HasIndex("Type");
+
+                    b.ToTable("FoodPlates");
+                });
+
+            modelBuilder.Entity("Saweat.Domain.Entities.FoodPlateType", b =>
+                {
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nchar(200)")
+                        .IsFixedLength();
+
+                    b.HasKey("Type");
+
+                    b.ToTable("FoodPlateTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Type = 0,
+                            Description = "Indefinido"
+                        },
+                        new
+                        {
+                            Type = 1,
+                            Description = "Especiales"
+                        },
+                        new
+                        {
+                            Type = 2,
+                            Description = "Carnes"
+                        },
+                        new
+                        {
+                            Type = 3,
+                            Description = "Vegetales"
+                        },
+                        new
+                        {
+                            Type = 4,
+                            Description = "Mixtos"
+                        },
+                        new
+                        {
+                            Type = 5,
+                            Description = "Bebidas"
+                        },
+                        new
+                        {
+                            Type = 6,
+                            Description = "Bebidas Alcoholicas"
+                        },
+                        new
+                        {
+                            Type = 7,
+                            Description = "Postres"
+                        });
                 });
 
             modelBuilder.Entity("Saweat.Domain.Entities.New", b =>
@@ -303,6 +398,21 @@ namespace Saweat.Persistence.Migrations
                             PostalCode = "30001",
                             Provincy = "Cantabria"
                         });
+                });
+
+            modelBuilder.Entity("Saweat.Domain.Entities.FoodPlate", b =>
+                {
+                    b.HasOne("Saweat.Domain.Entities.FoodPlateType", "FoodPlateType")
+                        .WithMany("FoodPlates")
+                        .HasForeignKey("Type")
+                        .IsRequired();
+
+                    b.Navigation("FoodPlateType");
+                });
+
+            modelBuilder.Entity("Saweat.Domain.Entities.FoodPlateType", b =>
+                {
+                    b.Navigation("FoodPlates");
                 });
 #pragma warning restore 612, 618
         }

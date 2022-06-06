@@ -1,0 +1,116 @@
+﻿@page "/food-plates/{PlateFoodId:int}"
+@inject NavigationManager navigationManager
+@inject IMediator Mediator
+
+<RadzenHeading Size="H1" Text="Platos / Productos" />
+
+<style>
+    form .row {
+        margin-bottom: 16px;
+    }
+</style>
+
+<ErrorControl Errors="@_errors" />
+
+<RadzenTemplateForm TItem="FoodPlate" Data="@_foodPlate" Submit="@OnSubmit">
+    <RadzenButton ButtonStyle="ButtonStyle.Success" ButtonType="ButtonType.Button" Text="Guardar" Click="@OnSubmit" />
+    <RadzenButton ButtonType="ButtonType.Button" Text="Cancelar" Click="@OnGoToMenusSite" />
+    <p />
+    <div class="row">
+        <div class="col-md-1 align-items-center d-flex">
+            <RadzenLabel Text="Nombre" />
+        </div>
+        <div class="col-md-7">
+            <RadzenTextBox Style="width: 100%;" Name="Name" @bind-Value="@_foodPlate.Name" />
+        </div>
+        <div class="col-md-1 align-items-center d-flex">
+            <RadzenLabel Text="Precio" />
+        </div>
+        <div class="col-md-2">
+            <RadzenNumeric Name="Price" @bind-Value="@_foodPlate.Price" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 align-items-center d-flex">
+            <RadzenLabel Text="Tipo Carta" />
+        </div>
+        <div class="col-md-3">
+
+            <RadzenDropDown Data="@_types"
+                            style="display: block; width: 100%"
+                            TextProperty="Description" @bind-Value="@(_foodPlate.Type)"
+                            ValueProperty="Type"
+                            Name="Description" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 align-items-center d-flex">
+            <RadzenLabel Text="Imagen" />
+        </div>
+        <div class="col-md-2">
+            <RadzenFileInput @bind-Value="@_foodPlate.Photo" TValue="string" Class="w-100" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 align-items-center d-flex">
+            <RadzenLabel Text="Descripcion" />
+        </div>
+        <div class="col-md-11">
+            <RadzenTextArea Style="width: 100%;" Name="Name" @bind-Value="@_foodPlate.Description" />
+        </div>
+    </div>
+</RadzenTemplateForm>
+
+@code {
+    private FoodPlate _foodPlate = new FoodPlate();
+    private IEnumerable<string> _errors;
+    private IList<FoodPlateType> _types = Array.Empty<FoodPlateType>();
+
+    [Parameter]
+    public int PlateFoodId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDropDownData();
+        if (PlateFoodId > 0)
+        {
+            var response = await Mediator.Send(new GetFoodPlateByIdRequest(PlateFoodId));
+            _foodPlate = response.Data ?? new FoodPlate();
+            return;
+        }
+    }
+
+    private async Task OnSubmit()
+    {
+        var response = await SaveFoodPlate();
+        if (response.ValidationErrors.Any())
+        {
+            _errors = response.ValidationErrors;
+            return;
+        }
+        await OnGoToMenusSite();
+    }
+
+    private async Task<Response<FoodPlate>> SaveFoodPlate()
+    {
+        return await Mediator.Send(new UpdateFoodPlateRequest
+            {
+                FoodPlate = _foodPlate
+            });
+    }
+
+    private async Task OnGoToMenusSite()
+    {
+        navigationManager.NavigateTo("/food-plates");
+    }
+
+    public async Task LoadDropDownData()
+    {
+        if (_types.Any())
+        {
+            return;
+        }
+        var typesResponse = await Mediator.Send(new GetAllFoodPlateTypesRequest());
+        _types = typesResponse.Data.ToList();
+    }
+}

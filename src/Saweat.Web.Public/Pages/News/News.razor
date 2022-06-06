@@ -13,7 +13,6 @@
                     <RadzenLink href="javascript:void(0)"
                                 Text="@selectedNew.Title"
                                 @onclick="@(args => OpenNewDetail(args, selectedNew.NewId))" />
-
                     <div style="font-size: .8em">@(selectedNew.PublishedDate.ToShortDateString())</div>
                     <div>@(GetContentText(selectedNew))</div>
                 </div>

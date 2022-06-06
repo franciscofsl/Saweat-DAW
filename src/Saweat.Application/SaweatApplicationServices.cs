@@ -7,8 +7,8 @@ public static class SaweatApplicationServices
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddMediatR(Assembly.GetExecutingAssembly());
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        services.AddMediatR(cfg => cfg.AsTransient(), Assembly.GetExecutingAssembly() );
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(),ServiceLifetime.Transient);
         return services;
     }
 }
