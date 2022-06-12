@@ -7,13 +7,13 @@
 
 <div style="width: fit-content; min-width: 200px;" Class="mt-3 mx-auto">
     <RadzenMenu>
-        <RadzenMenuItem Text="Recomendados" Click="args => Go(args, 1)" Icon="account_circle" />
-        <RadzenMenuItem Text="Carnes" Click="args => Go(args, 2)" Icon="account_circle" />
-        <RadzenMenuItem Text="Vegetales" Click="args => Go(args, 3)" Icon="account_circle" />
-        <RadzenMenuItem Text="Mixtos" Click="args => Go(args, 4)" Icon="account_circle" />
-        <RadzenMenuItem Text="Postres" Click="args => Go(args, 5)" Icon="account_circle" />
-        <RadzenMenuItem Text="Bebidas" Click="args => Go(args, 6)" Icon="account_circle" />
-        <RadzenMenuItem Text="Bebidas Alcoholicas" Click="args => Go(args, 7)" Icon="account_circle" />
+        <RadzenMenuItem Text="Recomendados" Click="args => Go(args, 1)" Icon="star_rate" Visible="@(_foodPlatesByType.SpecialFoodPlates != null && _foodPlatesByType.SpecialFoodPlates.Any())"/>
+        <RadzenMenuItem Text="Carnes" Click="args => Go(args, 2)" Icon="set_meal" Visible="@(_foodPlatesByType.MeatFoodPlates != null && _foodPlatesByType.MeatFoodPlates.Any())"/>
+        <RadzenMenuItem Text="Vegetales" Click="args => Go(args, 3)" Icon="nature" Visible="@(_foodPlatesByType.VegetableFoodPlates != null && _foodPlatesByType.VegetableFoodPlates.Any())"/>
+        <RadzenMenuItem Text="Mixtos" Click="args => Go(args, 4)" Icon="account_circle" Visible="@(_foodPlatesByType.MixedFoodPlates != null && _foodPlatesByType.MixedFoodPlates.Any())"/>
+        <RadzenMenuItem Text="Postres" Click="args => Go(args, 5)" Icon="cake"  Visible="@(_foodPlatesByType.DessertFoodPlates != null && _foodPlatesByType.DessertFoodPlates.Any())"/>
+        <RadzenMenuItem Text="Bebidas" Click="args => Go(args, 6)" Icon="opacity" Visible="@(_foodPlatesByType.DrinkFoodPlates != null && _foodPlatesByType.DrinkFoodPlates.Any())"/>
+        <RadzenMenuItem Text="Bebidas Alcoholicas" Click="args => Go(args, 7)" Icon="local_bar" Visible="@(_foodPlatesByType.AlcoholicDrinkFoodPlates != null && _foodPlatesByType.AlcoholicDrinkFoodPlates.Any())"/>
     </RadzenMenu>
 </div>
 

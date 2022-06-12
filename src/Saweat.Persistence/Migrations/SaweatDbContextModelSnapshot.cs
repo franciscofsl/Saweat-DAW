@@ -79,6 +79,10 @@ namespace Saweat.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingId"), 1L, 1);
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CustomerEmail")
                         .HasColumnType("nvarchar(max)");
 
@@ -229,107 +233,6 @@ namespace Saweat.Persistence.Migrations
                     b.HasKey("NewId");
 
                     b.ToTable("News");
-                });
-
-            modelBuilder.Entity("Saweat.Domain.Entities.OpeningPeriod", b =>
-                {
-                    b.Property<int>("OpeningId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OpeningId"), 1L, 1);
-
-                    b.Property<int>("Day")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("EndHour")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("StartHour")
-                        .HasColumnType("time");
-
-                    b.HasKey("OpeningId");
-
-                    b.ToTable("OpeningPeriods", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            OpeningId = 1,
-                            Day = 1,
-                            EndHour = new TimeSpan(0, 16, 0, 0, 0),
-                            StartHour = new TimeSpan(0, 13, 0, 0, 0)
-                        },
-                        new
-                        {
-                            OpeningId = 2,
-                            Day = 1,
-                            EndHour = new TimeSpan(0, 0, 0, 0, 0),
-                            StartHour = new TimeSpan(0, 20, 0, 0, 0)
-                        },
-                        new
-                        {
-                            OpeningId = 3,
-                            Day = 2,
-                            EndHour = new TimeSpan(0, 16, 0, 0, 0),
-                            StartHour = new TimeSpan(0, 13, 0, 0, 0)
-                        },
-                        new
-                        {
-                            OpeningId = 4,
-                            Day = 2,
-                            EndHour = new TimeSpan(0, 0, 0, 0, 0),
-                            StartHour = new TimeSpan(0, 20, 0, 0, 0)
-                        },
-                        new
-                        {
-                            OpeningId = 5,
-                            Day = 3,
-                            EndHour = new TimeSpan(0, 16, 0, 0, 0),
-                            StartHour = new TimeSpan(0, 13, 0, 0, 0)
-                        },
-                        new
-                        {
-                            OpeningId = 6,
-                            Day = 3,
-                            EndHour = new TimeSpan(0, 0, 0, 0, 0),
-                            StartHour = new TimeSpan(0, 20, 0, 0, 0)
-                        },
-                        new
-                        {
-                            OpeningId = 7,
-                            Day = 4,
-                            EndHour = new TimeSpan(0, 16, 0, 0, 0),
-                            StartHour = new TimeSpan(0, 13, 0, 0, 0)
-                        },
-                        new
-                        {
-                            OpeningId = 8,
-                            Day = 4,
-                            EndHour = new TimeSpan(0, 0, 0, 0, 0),
-                            StartHour = new TimeSpan(0, 20, 0, 0, 0)
-                        },
-                        new
-                        {
-                            OpeningId = 9,
-                            Day = 5,
-                            EndHour = new TimeSpan(0, 16, 0, 0, 0),
-                            StartHour = new TimeSpan(0, 13, 0, 0, 0)
-                        },
-                        new
-                        {
-                            OpeningId = 10,
-                            Day = 5,
-                            EndHour = new TimeSpan(0, 0, 0, 0, 0),
-                            StartHour = new TimeSpan(0, 20, 0, 0, 0)
-                        },
-                        new
-                        {
-                            OpeningId = 11,
-                            Day = 6,
-                            EndHour = new TimeSpan(0, 0, 0, 0, 0),
-                            StartHour = new TimeSpan(0, 13, 0, 0, 0)
-                        });
                 });
 
             modelBuilder.Entity("Saweat.Domain.Entities.Restaurant", b =>

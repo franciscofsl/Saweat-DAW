@@ -10,6 +10,4 @@ global using Saweat.Application.Handlers.Commands.Users;
 global using Saweat.Domain.Entities;
 global using Saweat.Test.Common;
 global using Xunit;
-global using Saweat.Application.Handlers.Commands.OpeningPeriods;
-global using Saweat.Application.Handlers.Queries.OpeningPeriods;
 global using Moq;

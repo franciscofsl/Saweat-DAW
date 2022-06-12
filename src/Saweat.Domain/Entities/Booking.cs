@@ -18,5 +18,7 @@ public class Booking
 
     public int PeopleAmount { get; set; }
 
+    public string Code { get; set; }
+
     public BookingState State { get; set; } = BookingState.Pending;
 }

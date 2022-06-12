@@ -18,6 +18,8 @@ public partial class BookingConfiguration : IEntityTypeConfiguration<Booking>
 
         entity.Property(B => B.PeopleAmount).HasDefaultValue(1);
 
+        entity.Property(B => B.Code).IsRequired();
+
         entity.Ignore(B => B.EndDate); 
     }
 

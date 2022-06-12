@@ -14,7 +14,6 @@ public partial class SaweatDbContext : DbContext
     public virtual DbSet<Restaurant> Restaurants { get; set; }
     public virtual DbSet<ApplicationUser> Users { get; set; }
     public virtual DbSet<Booking> Bookings { get; set; }
-    public virtual DbSet<OpeningPeriod> OpeningPeriods { get; set; }
     public virtual DbSet<Allergen> Allergens { get; set; }
     public virtual DbSet<New> News { get; set; }
     public virtual DbSet<FoodPlate> FoodPlates { get; set; }
@@ -31,7 +30,6 @@ public partial class SaweatDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new OpeningPeriodConfiguration());
         modelBuilder.ApplyConfiguration(new RestaurantConfiguration());
         modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
         modelBuilder.ApplyConfiguration(new FoodPlateConfiguration());

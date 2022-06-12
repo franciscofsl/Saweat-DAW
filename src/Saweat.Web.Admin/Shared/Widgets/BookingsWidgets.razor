@@ -1,6 +1,6 @@
 ﻿@using Saweat.Domain.Utils
 @using Radzen.Blazor
-@inject IMediator Mediator
+@inject IMediator mediator
 <RadzenHeading Size="H3" Text="Reservas"/>
 <div class="row">
     <p/>
@@ -34,8 +34,6 @@
                  IconName="auto_delete"
                  IconStyle="@GetIconStyle("F1948A")"
                  ValueStyle="@GetValueStyle("F1948A")"/>
-
-
 </div>
 
 @code {
@@ -52,7 +50,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await Mediator.Send(new GetBookingCountWidgetsValuesRequest());
+        var response = await mediator.Send(new GetBookingCountWidgetsValuesRequest());
         _countWidget = response.Data;
     }
 }

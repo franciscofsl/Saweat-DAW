@@ -14,8 +14,7 @@ public class UpdateBookingCommandTest
             CustomerPhone = "5476541"
         };
         var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
-        var repository = TestServices.GetMockRepository(Array.Empty<OpeningPeriod>());
-        var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
+        var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator());
         var response = await handler.Handle(new UpdateBookingRequest
         {
             Booking = booking
@@ -33,8 +32,7 @@ public class UpdateBookingCommandTest
             CustomerPhone = "5476541"
         };
         var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
-        var repository = TestServices.GetMockRepository(Array.Empty<OpeningPeriod>());
-        var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
+        var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator());
         var response = await handler.Handle(new UpdateBookingRequest
         {
             Booking = booking
@@ -53,8 +51,7 @@ public class UpdateBookingCommandTest
             CustomerPhone = "5476541"
         };
         var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
-        var repository = TestServices.GetMockRepository(Array.Empty<OpeningPeriod>());
-        var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
+        var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator());
         var response = await handler.Handle(new UpdateBookingRequest
         {
             Booking = booking
@@ -72,8 +69,7 @@ public class UpdateBookingCommandTest
             CustomerPhone = "5476541"
         };
         var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
-        var repository = TestServices.GetMockRepository(Array.Empty<OpeningPeriod>());
-        var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
+        var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator());
         var response = await handler.Handle(new UpdateBookingRequest
         {
             Booking = booking
@@ -92,8 +88,7 @@ public class UpdateBookingCommandTest
             CustomerPhone = string.Empty
         };
         var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
-        var repository = TestServices.GetMockRepository(Array.Empty<OpeningPeriod>());
-        var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
+        var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator());
         var response = await handler.Handle(new UpdateBookingRequest
         {
             Booking = booking
@@ -113,41 +108,10 @@ public class UpdateBookingCommandTest
             BookingId = 1
         };
         var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
-        var repository = TestServices.GetMockRepository(Array.Empty<OpeningPeriod>());
-        var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
+        var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator());
         await handler.Handle(new UpdateBookingRequest
         {
             Booking = booking
         }, default);
-    }
-
-    [Fact]
-    public async Task Create_booking_out_of_opening_period_return_error()
-    {
-        var periods = new[]
-        {
-            new OpeningPeriod
-            {
-                StartHour = new TimeSpan(15, 0, 0),
-                EndHour = new TimeSpan(17, 0, 0),
-                Day = DayOfWeek.Friday
-            }
-        };
-        var booking = new Booking
-        {
-            CustomerEmail = "email@email.com",
-            CustomerName = "Fran",
-            CustomerPhone = "987498",
-            StartDate = new DateTime(2022, 5, 20, 10, 0, 0)
-        };
-        var unitOfWork = TestServices.GetMockUnitOfWork<Booking>();
-        var repository = TestServices.GetMockRepository(periods);
-        var handler = new UpdateBookingHandler(unitOfWork, new UpdateBookingValidator(repository));
-        var response = await handler.Handle(new UpdateBookingRequest
-        {
-            Booking = booking
-        }, default);
-        response.ValidationErrors.Should().HaveCount(1);
-        response.ValidationErrors[0].Should().Be("No se puede solicitar una reserva fuera del horario de apertura.");
     }
 }

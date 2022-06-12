@@ -1,0 +1,42 @@
+﻿<style>
+    form .row {
+        margin-bottom: 16px;
+    }
+</style>
+<RadzenTemplateForm TItem="Booking" Data="@_booking" Submit="@OnSubmit">
+    <RadzenHeading Size="H1" Text="Cancelar" />
+    <p />
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Codigo" />
+        </div>
+        <div class="col-md-8" >
+            <RadzenTextBox @bind-Value="@_booking.CustomerName" Name="CustomerName" style="width: 100%;"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Telefono" />
+        </div>
+        <div class="col-md-8">
+            <RadzenTextBox @bind-Value="@_booking.CustomerPhone" Name="CustomerPhone"style="width: 100%;" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Email" />
+        </div>
+        <div class="col-md-8">
+            <RadzenTextBox @bind-Value="@_booking.CustomerEmail" Name="CustomerEmail"style="width: 100%;" />
+        </div>
+    </div>
+    <RadzenButton ButtonStyle="ButtonStyle.Danger" ButtonType="ButtonType.Button" Text="Cancelar" Click="@OnSubmit" />
+</RadzenTemplateForm>
+@code {
+    private readonly Booking _booking = new();
+
+    private async Task OnSubmit()
+    {
+        await Task.Delay(50);
+    }
+}

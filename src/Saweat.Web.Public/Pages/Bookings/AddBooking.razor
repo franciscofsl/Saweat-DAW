@@ -1,0 +1,85 @@
+﻿@using Saweat.Application.Handlers.Commands.Bookings
+@inject IMediator mediator
+@inject NotificationService notificationService
+
+<style>
+    form .row {
+        margin-bottom: 16px;
+    }
+</style>
+<RadzenTemplateForm TItem="Booking" Data="@_booking" Submit="@OnSubmit">
+    <RadzenHeading Size="H1" Text="Solicitar" />
+    <p />
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Nombre" />
+        </div>
+        <div class="col-md-8" >
+            <RadzenTextBox @bind-Value="@_booking.CustomerName" Name="CustomerName" style="width: 100%;"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Telefono" />
+        </div>
+        <div class="col-md-8">
+            <RadzenTextBox @bind-Value="@_booking.CustomerPhone" Name="CustomerPhone"style="width: 100%;" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Email" />
+        </div>
+        <div class="col-md-8">
+            <RadzenTextBox @bind-Value="@_booking.CustomerEmail" Name="CustomerEmail"style="width: 100%;" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Fecha y hora" />
+        </div>
+        <div class="col-md-8">
+            <RadzenDatePicker  @bind-Value="@_booking.StartDate" TValue="DateTime" ShowTime="true" ShowSeconds="false" HoursStep="1" MinutesStep="5" SecondsStep="10" DateFormat="dd/MM/yyyy HH:mm" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Nº Comensales" />
+        </div>
+        <div class="col-md-8">
+            <RadzenNumeric  @bind-Value="@_booking.PeopleAmount" TValue="int" />
+        </div>
+    </div>
+    <RadzenButton ButtonStyle="ButtonStyle.Success" ButtonType="ButtonType.Button" Text="Solicitar" Click="@OnSubmit" />
+</RadzenTemplateForm>
+@code {
+    private Booking _booking = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _booking.StartDate = DateTime.Now;
+        await base.OnInitializedAsync();
+    }
+
+    private async Task OnSubmit()
+    {
+        var response = await mediator.Send(new UpdateBookingRequest { Booking = _booking});
+        if (response.Success)
+        {
+            ShowSuccessUpdate();
+            _booking = new();
+            _booking.StartDate = DateTime.Now;
+        }
+    }
+
+    private void ShowSuccessUpdate()
+    {
+        var notification = new NotificationMessage
+        {
+            Severity = NotificationSeverity.Success,
+            Detail = "Se ha registrado su reserva, recibira un email con la confirmación.",
+            Duration = 4000
+        };
+        notificationService.Notify(notification); 
+    }
+}
