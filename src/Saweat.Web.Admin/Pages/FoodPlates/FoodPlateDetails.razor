@@ -1,6 +1,7 @@
 ﻿@page "/food-plates/{PlateFoodId:int}"
 @inject NavigationManager navigationManager
 @inject IMediator Mediator
+@attribute [Authorize]
 
 <RadzenHeading Size="H1" Text="Platos / Productos" />
 

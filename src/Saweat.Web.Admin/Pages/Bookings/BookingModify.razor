@@ -1,0 +1,108 @@
+﻿@using Saweat.Application.Handlers.Commands.Bookings
+@using Saweat.Domain.Utils
+@inject DialogService _dialogService
+@inject IMediator _mediator
+@attribute [Authorize]
+
+<style>
+    form .row {
+        margin-bottom: 16px;
+    }
+</style>
+<RadzenTemplateForm TItem="Booking" Data="@_model" Submit="@OnSubmit">
+    <p />
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Nombre" />
+        </div>
+        <div class="col-md-8">
+            <RadzenTextBox @bind-Value="@_model.CustomerName" Name="CustomerName" style="width: 100%;" ReadOnly="true" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Telefono" />
+        </div>
+        <div class="col-md-8">
+            <RadzenTextBox @bind-Value="@_model.CustomerPhone" Name="CustomerPhone" style="width: 100%;" ReadOnly="true" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Email" />
+        </div>
+        <div class="col-md-8">
+            <RadzenTextBox @bind-Value="@_model.CustomerEmail" Name="CustomerEmail" style="width: 100%;" ReadOnly="true" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Fecha y hora" />
+        </div>
+        <div class="col-md-8">
+            <RadzenDatePicker @bind-Value="@_model.StartDate" TValue="DateTime" ShowTime="true" ShowSeconds="false" HoursStep="1" MinutesStep="15" ReadOnly="true" SecondsStep="10" DateFormat="dd/MM/yyyy HH:mm" style="width: 100%;" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Nº Comensales" />
+        </div>
+        <div class="col-md-8">
+            <RadzenNumeric @bind-Value="@_model.PeopleAmount" TValue="int" ReadOnly="true" style="width: 100%;" />
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel Text="Estado" />
+        </div>
+        <div class="col-md-8">
+            <RadzenDropDown AllowClear="false" 
+                            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            Placeholder="Select..." 
+                            Multiple="false" 
+                            @bind-Value="@_model.State"
+                            Data=@data 
+                            TextProperty="Name" 
+                            ValueProperty="Value" 
+                            TValue="BookingState"
+                            style="width: 100%;"/>
+
+        </div>
+    </div>
+    <RadzenButton ButtonStyle="ButtonStyle.Success" ButtonType="ButtonType.Button" Text="Guardar" Click="@OnSubmit" style="width: 100%;" />
+</RadzenTemplateForm>
+@code {
+    [Parameter]
+    public Booking Booking { get; set; }
+
+    private Booking _model = new Booking();
+
+    protected override void OnParametersSet()
+    {
+        _model = Booking;
+    }
+
+    private async Task OnSubmit()
+    {
+        await _mediator.Send(new UpdateBookingRequest
+        {
+            Booking = _model
+        });
+        _dialogService.Close(_model);
+    }
+    IEnumerable<BookingStateDto> data = GetData(); 
+
+    private static IEnumerable<BookingStateDto> GetData()
+    {
+        return new BookingStateDto[]
+        {
+            new BookingStateDto("Indefinida", BookingState.Undefinied),
+            new BookingStateDto("Pendiente", BookingState.Pending),
+            new BookingStateDto("Aprobada", BookingState.Approved),
+            new BookingStateDto("Cancelada", BookingState.Cancel),
+        };
+    }
+
+   
+}

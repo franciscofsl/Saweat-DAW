@@ -1,8 +1,7 @@
 ﻿@page "/food-plates"
-@using Saweat.Application.Handlers.Commands.FoodPlates
-@using Saweat.Application.Handlers.Queries.FoodPlates 
 @inject NavigationManager navigationManager
 @inject IMediator mediator
+@attribute [Authorize]
 
 <RadzenHeading Size="H1" Text="Platos / Productos" />
 

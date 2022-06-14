@@ -1,4 +1,6 @@
-﻿namespace Saweat.Application.Validators.Entities.Bookings;
+﻿using Saweat.Domain.Enums;
+
+namespace Saweat.Application.Validators.Entities.Bookings;
 
 public class UpdateBookingValidator : AbstractValidator<Booking>
 {

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Saweat.Persistence.Contexts;
 
@@ -11,9 +12,10 @@ using Saweat.Persistence.Contexts;
 namespace Saweat.Persistence.Migrations
 {
     [DbContext(typeof(SaweatDbContext))]
-    partial class SaweatDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220613162123_InitialJune")]
+    partial class InitialJune
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,6 +117,7 @@ namespace Saweat.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlateFoodId"), 1L, 1);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nchar(200)")
                         .IsFixedLength();

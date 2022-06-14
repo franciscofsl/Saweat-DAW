@@ -1,5 +1,7 @@
 ﻿@page "/bookings"
-@inject IMediator Mediator
+@inject IMediator mediator
+@inject DialogService dialogService
+@attribute [Authorize]
 
 <RadzenHeading Size="H1" Text="Reservas"></RadzenHeading>
 
@@ -11,20 +13,17 @@
                  EndProperty="EndDate"
                  TextProperty="CustomerName"
                  SelectedIndex="2"
-                 AppointmentRender="@OnBookingRender">
+                 AppointmentRender="@OnBookingRender"
+                 AppointmentSelect="@OnAppointmentSelect" >
     <RadzenDayView/>
     <RadzenWeekView/>
     <RadzenMonthView/>
 </RadzenScheduler>
 
 @code {
-
-
     private RadzenScheduler<Booking> scheduler;
-
     private IList<Booking> bookings;
-
-
+    
     protected override async Task OnInitializedAsync()
     {
         await OnRefreshBookings();
@@ -32,7 +31,7 @@
 
     private async Task OnRefreshBookings()
     {
-        var response = await Mediator.Send(new GetBookingsByStateRequest());
+        var response = await mediator.Send(new GetBookingsByStateRequest());
         bookings = response.Data.ToList();
     }
 
@@ -58,5 +57,11 @@
         {
             args.Attributes["style"] = "background: #F1948A; color:black;";
         }
+    }
+
+    private async Task OnAppointmentSelect(SchedulerAppointmentSelectEventArgs<Booking> args)
+    {
+        await dialogService.OpenAsync<BookingModify>("Modificar Reserva", new Dictionary<string, object> { { "Booking", args.Data } });
+        await scheduler.Reload();
     }
 }

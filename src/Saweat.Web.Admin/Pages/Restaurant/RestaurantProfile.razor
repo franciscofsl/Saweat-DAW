@@ -1,16 +1,11 @@
 ﻿@page "/restaurant-profile"
 @inject IMediator Mediator
+@attribute [Authorize]
 
 <RadzenHeading Size="H1" Text="Restaurante"></RadzenHeading>
 @if (_restaurant != null)
 {
-    <RadzenTabs TabPosition="TabPosition.Top" style=" display: flex;" RenderMode="TabRenderMode.Client">
-        <Tabs>
-            <RadzenTabsItem Text="Datos básicos">
-                <RestaurantBasicData Restaurant="@_restaurant" />
-            </RadzenTabsItem>
-        </Tabs>
-    </RadzenTabs>
+    <RestaurantBasicData Restaurant="@_restaurant" />
 }
 @code {
     private Restaurant _restaurant;
@@ -23,6 +18,4 @@
             _restaurant = response.Data;
         }
     }
-
-
 }

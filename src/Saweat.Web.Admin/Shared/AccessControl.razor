@@ -1,11 +1,7 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @using Radzen.Blazor
 @using Saweat.Application.Handlers.Commands.Users
-<RadzenProfileMenu>
-    <ChildContent>
-        <RadzenProfileMenuItem Path="profile" Icon="settings" Text="Perfil"/>
-        <RadzenProfileMenuItem Text="Logout" Value="Logout" Icon="power_settings_new"/>
-    </ChildContent>
+<RadzenProfileMenu >
     <Template>
         <RadzenLabel Text="@CurrentUser.Name">
         </RadzenLabel>

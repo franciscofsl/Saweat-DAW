@@ -9,6 +9,7 @@
     <ItemGroup>
         <Folder Include="Contracts\Infrastructure\" />
         <Folder Include="Contracts\Persistence\" />
+        <Folder Include="Validators\Entities\Restaurants\" />
         <Folder Include="Validators\Entities\News\" />
     </ItemGroup>
 

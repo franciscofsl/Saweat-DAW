@@ -1,46 +1,48 @@
 ﻿@page "/allergens/{AllergenId:int}"
-@using Saweat.Domain.Common
 @using Saweat.Application.Handlers.Queries.Allergens
 @using Saweat.Application.Handlers.Commands.Allergens
 @inject NavigationManager navigationManager
 @inject IMediator Mediator
+@attribute [Authorize]
 
-<RadzenHeading Size="H1" Text="@_description"/>
+<RadzenHeading Size="H1" Text="@_description" />
 
 <style>
-    form .row { margin-bottom: 16px; }
+    form .row {
+        margin-bottom: 16px;
+    }
 </style>
 
-<ErrorControl Errors="@_errors"/>
+<ErrorControl Errors="@_errors" />
 
 <RadzenTemplateForm TItem="Allergen" Data="@_allergen" Submit="@OnSubmit">
-    <RadzenButton ButtonStyle="ButtonStyle.Success" ButtonType="ButtonType.Button" Text="Guardar" Click="@OnSubmit"/>
-    <RadzenButton ButtonType="ButtonType.Button" Text="Cancelar" Click="@OnGoToAllergensSite"/>
-    <p/>
+    <RadzenButton ButtonStyle="ButtonStyle.Success" ButtonType="ButtonType.Button" Text="Guardar" Click="@OnSubmit" />
+    <RadzenButton ButtonType="ButtonType.Button" Text="Cancelar" Click="@OnGoToAllergensSite" />
+    <p />
     <div class="row">
         <div class="col-md-2 align-items-center d-flex">
-            <RadzenLabel Text="Codigo"/>
+            <RadzenLabel Text="Codigo" />
         </div>
         <div class="col-md-8">
-            <RadzenTextBox Name="AllergenCode" @bind-Value="@_allergen.AllergenCode"/>
+            <RadzenTextBox Name="AllergenCode" @bind-Value="@_allergen.AllergenCode" />
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-2 align-items-center d-flex">
-            <RadzenLabel Text="Nombre"/>
+            <RadzenLabel Text="Nombre" />
         </div>
         <div class="col-md-8">
-            <RadzenTextBox Name="Name" @bind-Value="@_allergen.Name"/>
+            <RadzenTextBox Name="Name" @bind-Value="@_allergen.Name" />
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-2 align-items-center d-flex">
-            <RadzenLabel Text="Icono"/>
+            <RadzenLabel Text="Icono" />
         </div>
         <div class="col-md-8">
-            <RadzenTextBox Name="Icon" @bind-Value="@_allergen.Icon"/>
+            <RadzenTextBox Name="Icon" @bind-Value="@_allergen.Icon" />
         </div>
     </div>
 
@@ -89,9 +91,9 @@
     private async Task<Response<Allergen>> SaveAllergen()
     {
         return await Mediator.Send(new UpdateAllergenRequest
-        {
-            Allergen = _allergen
-        });
+            {
+                Allergen = _allergen
+            });
     }
 
     private async Task OnGoToAllergensSite()

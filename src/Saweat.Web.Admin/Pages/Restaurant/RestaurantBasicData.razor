@@ -2,6 +2,7 @@
 @inject NavigationManager navigationManager
 @inject IMediator Mediator
 @inject NotificationService NotificationService
+@attribute [Authorize]
 
 <style>
     form .row {
@@ -14,32 +15,86 @@
 <RadzenTemplateForm TItem="Restaurant" Data="@Restaurant" Submit="@OnSubmit">
     <RadzenButton ButtonStyle="ButtonStyle.Success" ButtonType="ButtonType.Button" Text="Guardar" Click="@OnSubmit" />
     <RadzenButton ButtonType="ButtonType.Button" Text="Cancelar" Click="@OnCancel" />
-    <div class="row">
-        <div class="col-md-4 align-items-center d-flex">   
-            <RadzenLabel Text="Nombre" />
-        </div>
-        <div class="col-md-8">
-            <RadzenTextBox style="width: 100%;" Name="Amount" @bind-Value="@Restaurant.Description" />
-        </div>
-    </div> 
-    <div class="row">
-        <div class="col-md-4 align-items-center d-flex">   
-            <RadzenLabel Text="Imagen" />
-        </div>
-        <div class="col-md-8">
-            <RadzenFileInput @bind-Value="@Restaurant.Photo" TValue="string" Class="w-100"  />
-        </div>
-    </div>  
-    <div class="row">
-
-        <div class="col-md-4 align-items-center d-flex">
-            <RadzenLabel Text="Descripcion"/>
-        </div>
-        <div class="col-md-8">
-            <RadzenTextArea style="width: 100%;" Name="Description" @bind-value="@Restaurant.LongDescription"/>
-        </div>
-    </div>
-
+    <p />
+    <RadzenTabs TabPosition="@TabPosition.Top" RenderMode="TabRenderMode.Client">
+        <Tabs>
+            <RadzenTabsItem Text="Datos Básicos">
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Nombre" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="Amount" @bind-Value="@Restaurant.Description" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Imagen" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenFileInput @bind-Value="@Restaurant.Photo" TValue="string" Class="w-100" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Descripcion" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextArea style="width: 100%;" Name="Description" @bind-value="@Restaurant.LongDescription" />
+                    </div>
+                </div>
+            </RadzenTabsItem>
+            <RadzenTabsItem Text="Contacto">
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Dirección" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="AAddressmount" @bind-Value="@Restaurant.Address" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Ciudad" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox @bind-Value="@Restaurant.City" Class="w-100" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Provincia" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="Provincy" @bind-value="@Restaurant.Provincy" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="CP" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="Email" @bind-value="@Restaurant.PostalCode" MaxLength="5"/>
+                    </div>
+                </div><div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Email" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="Email" @bind-value="@Restaurant.Email" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Telefono" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="Email" @bind-value="@Restaurant.Phone" />
+                    </div>
+                </div>
+            </RadzenTabsItem>
+        </Tabs>
+    </RadzenTabs>
 </RadzenTemplateForm>
 @code {
     private IEnumerable<string> _errors;
@@ -68,12 +123,12 @@
     private void ShowSuccessUpdate()
     {
         var notification = new NotificationMessage
-        {
-            Severity = NotificationSeverity.Success,
-            Detail = "Se han guardado los cambios",
-            Duration = 4000
-        };
-        NotificationService.Notify(notification); 
+            {
+                Severity = NotificationSeverity.Success,
+                Detail = "Se han guardado los cambios",
+                Duration = 4000
+            };
+        NotificationService.Notify(notification);
     }
 
 }

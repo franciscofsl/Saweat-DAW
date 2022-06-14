@@ -21,4 +21,7 @@ public class Restaurant
     public string Phone { get; set; }
 
     public bool Enabled { get; set; }
+
+    public string Email { get; set; }
+    public string EmailPassword { get; set; }
 }

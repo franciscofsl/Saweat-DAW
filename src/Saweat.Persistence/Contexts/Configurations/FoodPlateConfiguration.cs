@@ -8,7 +8,8 @@ public partial class FoodPlateConfiguration : IEntityTypeConfiguration<FoodPlate
 
         entity.Property(e => e.Description)
             .HasMaxLength(200)
-            .IsFixedLength();
+            .IsFixedLength()
+            .IsRequired(false);
 
         entity.Property(e => e.Name)
             .HasMaxLength(30)
