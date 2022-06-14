@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Saweat.Persistence.Migrations
 {
-    public partial class InitialJune : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -87,8 +87,7 @@ namespace Saweat.Persistence.Migrations
                     Photo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Enabled = table.Column<bool>(type: "bit", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    EmailPassword = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -115,7 +114,7 @@ namespace Saweat.Persistence.Migrations
                     PlateFoodId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nchar(30)", fixedLength: true, maxLength: 30, nullable: false),
-                    Description = table.Column<string>(type: "nchar(200)", fixedLength: true, maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "nchar(200)", fixedLength: true, maxLength: 200, nullable: true),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false)

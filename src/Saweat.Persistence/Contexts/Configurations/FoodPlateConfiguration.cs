@@ -12,7 +12,7 @@ public partial class FoodPlateConfiguration : IEntityTypeConfiguration<FoodPlate
             .IsRequired(false);
 
         entity.Property(e => e.Name)
-            .HasMaxLength(30)
+            .HasMaxLength(100)
             .IsFixedLength();
 
         entity.Property(e => e.Photo).IsRequired();

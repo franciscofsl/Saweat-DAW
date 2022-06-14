@@ -16,7 +16,7 @@ public class GetAllFoodPlatesHandler : IRequestHandler<GetAllFoodPlatesRequest, 
     {
         Func<IQueryable<FoodPlate>, IIncludableQueryable<FoodPlate, object>> include =
             i => i.Include(a => a.FoodPlateType);
-        var foodPlates = await _repository.GetAllAsync(include: include, token: cancellationToken);
+        var foodPlates = await _repository.GetAllAsync(tracking: false, include: include, token: cancellationToken);
         return Response<IEnumerable<FoodPlate>>.CreateResponse(foodPlates);
     }
 }

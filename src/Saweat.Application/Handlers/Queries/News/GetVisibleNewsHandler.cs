@@ -11,7 +11,7 @@ public class GetVisibleNewsHandler : IRequestHandler<GetVisibleNewsRequest, Resp
 
     public async Task<Response<IEnumerable<New>>> Handle(GetVisibleNewsRequest request, CancellationToken cancellationToken)
     {
-        var news = await _repository.GetAllAsync(filter: n => n.Visible && n.PublishedDate <= DateTime.Now, token: cancellationToken);
+        var news = await _repository.GetAllAsync(filter: n => n.Visible && n.PublishedDate <= DateTime.Now, tracking: false, token: cancellationToken);
         return Response<IEnumerable<New>>.CreateResponse(news.OrderByDescending(n => n.PublishedDate));
     }
 }

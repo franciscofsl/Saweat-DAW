@@ -4,38 +4,36 @@
 
 namespace Saweat.Persistence.Migrations
 {
-    public partial class Other : Migration
+    public partial class ChangeFoodPlates : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Description",
+                name: "Name",
                 table: "FoodPlates",
-                type: "nchar(200)",
+                type: "nchar(100)",
                 fixedLength: true,
-                maxLength: 200,
-                nullable: true,
+                maxLength: 100,
+                nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nchar(200)",
+                oldType: "nchar(30)",
                 oldFixedLength: true,
-                oldMaxLength: 200);
+                oldMaxLength: 30);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Description",
+                name: "Name",
                 table: "FoodPlates",
-                type: "nchar(200)",
+                type: "nchar(30)",
                 fixedLength: true,
-                maxLength: 200,
+                maxLength: 30,
                 nullable: false,
-                defaultValue: "",
                 oldClrType: typeof(string),
-                oldType: "nchar(200)",
+                oldType: "nchar(100)",
                 oldFixedLength: true,
-                oldMaxLength: 200,
-                oldNullable: true);
+                oldMaxLength: 100);
         }
     }
 }

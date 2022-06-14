@@ -25,7 +25,6 @@ public partial class RestaurantConfiguration : IEntityTypeConfiguration<Restaura
 
         entity.Property(e => e.Provincy).HasMaxLength(100);
         entity.Property(e => e.Email).HasMaxLength(500);
-        entity.Property(e => e.EmailPassword).HasMaxLength(500);
          
         OnConfigurePartial(entity);
     }

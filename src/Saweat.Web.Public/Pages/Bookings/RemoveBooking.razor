@@ -1,4 +1,8 @@
-﻿<style>
+﻿@using Saweat.Application.Handlers.Commands.Bookings
+@inject IMediator _mediator;
+@inject DialogService dialogService;
+
+<style>
     form .row {
         margin-bottom: 16px;
     }
@@ -11,32 +15,21 @@
             <RadzenLabel Text="Codigo" />
         </div>
         <div class="col-md-8" >
-            <RadzenTextBox @bind-Value="@_booking.CustomerName" Name="CustomerName" style="width: 100%;"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 align-items-center d-flex">
-            <RadzenLabel Text="Telefono" />
-        </div>
-        <div class="col-md-8">
-            <RadzenTextBox @bind-Value="@_booking.CustomerPhone" Name="CustomerPhone"style="width: 100%;" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 align-items-center d-flex">
-            <RadzenLabel Text="Email" />
-        </div>
-        <div class="col-md-8">
-            <RadzenTextBox @bind-Value="@_booking.CustomerEmail" Name="CustomerEmail"style="width: 100%;" />
+            <RadzenTextBox @bind-Value="@_booking.Code" Name="Code" style="width: 100%;"/>
         </div>
     </div>
     <RadzenButton ButtonStyle="ButtonStyle.Danger" ButtonType="ButtonType.Button" Text="Cancelar" Click="@OnSubmit" />
 </RadzenTemplateForm>
 @code {
-    private readonly Booking _booking = new();
+    private Booking _booking = new();
 
     private async Task OnSubmit()
     {
-        await Task.Delay(50);
+        var response = await _mediator.Send(new CancelBookingRequest { Code = _booking.Code });
+        var message = response.Data
+            ? "Su reserva ha quedado cancelada."
+            : "No se ha encontrado una reserva con el codigo indicado.";
+        await dialogService.OpenAsync<BookingMessage>("Aviso", new Dictionary<string, object> { { "Message", message } });
+        _booking = new();
     }
 }

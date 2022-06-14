@@ -11,7 +11,7 @@ public class GetUserByEmailHandler : IRequestHandler<GetUserByEmailRequest, Resp
 
     public async Task<Response<ApplicationUser>> Handle(GetUserByEmailRequest request, CancellationToken cancellationToken)
     {
-        var elements = await _repository.GetAllAsync(filter: u => u.Email == request.Email, token: cancellationToken);
+        var elements = await _repository.GetAllAsync(tracking: false, filter: u => u.Email == request.Email, token: cancellationToken);
         return Response<ApplicationUser>.CreateResponse(elements.FirstOrDefault());
     }
 }

@@ -11,7 +11,7 @@ public class GetAllFoodPlateTypesHandler : IRequestHandler<GetAllFoodPlateTypesR
 
     public async Task<Response<IEnumerable<FoodPlateType>>> Handle(GetAllFoodPlateTypesRequest request, CancellationToken cancellationToken)
     {
-        var foodPlateTypes = await _repository.GetAllAsync(token: cancellationToken);
+        var foodPlateTypes = await _repository.GetAllAsync(tracking: false, token: cancellationToken);
         return Response<IEnumerable<FoodPlateType>>.CreateResponse(foodPlateTypes);
     }
 }

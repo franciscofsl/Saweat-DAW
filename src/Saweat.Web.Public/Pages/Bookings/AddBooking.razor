@@ -1,6 +1,6 @@
 ﻿@using Saweat.Application.Handlers.Commands.Bookings
 @inject IMediator mediator
-@inject NotificationService notificationService
+@inject DialogService dialogService
 
 <style>
     form .row {
@@ -66,20 +66,11 @@
         var response = await mediator.Send(new UpdateBookingRequest { Booking = _booking});
         if (response.Success)
         {
-            ShowSuccessUpdate();
+            var message = $"Su reserva ha quedado registrada con el codigo {response.Data.Code}, anotelo para futuros usos.";
+            await dialogService.OpenAsync<BookingMessage>("Aviso", new Dictionary<string, object> { { "Message", message } });
+
             _booking = new();
             _booking.StartDate = DateTime.Now;
         }
-    }
-
-    private void ShowSuccessUpdate()
-    {
-        var notification = new NotificationMessage
-        {
-            Severity = NotificationSeverity.Success,
-            Detail = "Se ha registrado su reserva, recibira un email con la confirmación.",
-            Duration = 4000
-        };
-        notificationService.Notify(notification); 
-    }
+    } 
 }

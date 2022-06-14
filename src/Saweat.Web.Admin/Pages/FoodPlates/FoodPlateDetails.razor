@@ -22,7 +22,7 @@
             <RadzenLabel Text="Nombre" />
         </div>
         <div class="col-md-7">
-            <RadzenTextBox Style="width: 100%;" Name="Name" @bind-Value="@_foodPlate.Name" />
+            <RadzenTextBox Style="width: 100%;" Name="Name" @bind-Value="@_foodPlate.Name" MaxLength="100"/>
         </div>
         <div class="col-md-1 align-items-center d-flex">
             <RadzenLabel Text="Precio" />
@@ -57,7 +57,7 @@
             <RadzenLabel Text="Descripcion" />
         </div>
         <div class="col-md-11">
-            <RadzenTextArea Style="width: 100%;" Name="Name" @bind-Value="@_foodPlate.Description" />
+            <RadzenTextArea Style="width: 100%;" Name="Name" @bind-Value="@_foodPlate.Description" MaxLength="200"/>
         </div>
     </div>
 </RadzenTemplateForm>

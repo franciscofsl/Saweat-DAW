@@ -52,7 +52,7 @@ public class UpdateBookingHandler : IRequestHandler<UpdateBookingRequest, Respon
         var temporalCode = string.Empty;
         while (temporalCode == string.Empty)
         {
-            var generatedCode = Guid.NewGuid().ToString().Replace("-", "");
+            var generatedCode = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 8);
             if (!existingCodes.Any(c => c.Equals(generatedCode)))
             {
                 temporalCode = generatedCode;

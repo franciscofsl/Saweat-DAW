@@ -121,8 +121,8 @@ namespace Saweat.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nchar(30)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nchar(100)")
                         .IsFixedLength();
 
                     b.Property<string>("Photo")
@@ -256,11 +256,6 @@ namespace Saweat.Persistence.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("EmailPassword")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");

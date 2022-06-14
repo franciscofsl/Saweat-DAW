@@ -14,7 +14,7 @@ public class GetBookingCountWidgetsValuesHandler : IRequestHandler<GetBookingCou
 
     public async Task<Response<BookingCountWidget>> Handle(GetBookingCountWidgetsValuesRequest request, CancellationToken cancellationToken)
     {
-        var bookings = (await _repository.GetAllAsync(filter: b => b.StartDate >= DateTime.Now, token: cancellationToken)).ToArray();
+        var bookings = (await _repository.GetAllAsync(tracking: false, filter: b => b.StartDate >= DateTime.Now, token: cancellationToken)).ToArray();
         var bookingCount = new BookingCountWidget
         {
             TodayBookings = bookings.Count(b => b.State == BookingState.Approved && b.StartDate == DateTime.Today),

@@ -11,7 +11,7 @@ public class GetAllAllergensHandler : IRequestHandler<GetAllAllergensRequest, Re
 
     public async Task<Response<IEnumerable<Allergen>>> Handle(GetAllAllergensRequest request, CancellationToken cancellationToken)
     {
-        var allergens = await _repository.GetAllAsync(token: cancellationToken);
+        var allergens = await _repository.GetAllAsync(tracking: false, token: cancellationToken);
         return Response<IEnumerable<Allergen>>.CreateResponse(allergens);
     }
 }

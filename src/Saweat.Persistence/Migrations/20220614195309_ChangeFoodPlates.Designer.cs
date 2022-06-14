@@ -12,8 +12,8 @@ using Saweat.Persistence.Contexts;
 namespace Saweat.Persistence.Migrations
 {
     [DbContext(typeof(SaweatDbContext))]
-    [Migration("20220613162123_InitialJune")]
-    partial class InitialJune
+    [Migration("20220614195309_ChangeFoodPlates")]
+    partial class ChangeFoodPlates
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -117,15 +117,14 @@ namespace Saweat.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlateFoodId"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nchar(200)")
                         .IsFixedLength();
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nchar(30)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nchar(100)")
                         .IsFixedLength();
 
                     b.Property<string>("Photo")
@@ -259,11 +258,6 @@ namespace Saweat.Persistence.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("EmailPassword")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");

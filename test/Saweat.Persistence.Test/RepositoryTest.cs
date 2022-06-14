@@ -196,7 +196,8 @@ public class RepositoryTest
             PostalCode = I,
             Provincy = I,
             LongDescription = I,
-            Phone = I
+            Phone = I,
+            Email = I
         }).ToArray();
     }
 }
